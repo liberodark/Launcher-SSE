@@ -125,7 +125,7 @@ GUISetState(@SW_HIDE, $aPanel[$i])
 EndIf
 Next
 Case $hFooter
-ShellExecute("<a href=http://torrentfever1.altervista.org/"</a>)
+ShellExecute("<a href=http://torrentfever1.altervista.org/ </a>")
 EndSwitch
 Case $aPanel[2]
 Switch $nMsg[0]
