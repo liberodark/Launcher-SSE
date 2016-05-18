@@ -133,7 +133,7 @@ GUISetState(@SW_HIDE, $aPanel[$i])
 EndIf
 Next
 Case $hFooter
-ShellExecute("<a href=https://github.com/liberodark/Launcher-SSE </a>")
+ShellExecute("https://github.com/liberodark/Launcher-SSE")
 EndSwitch
 Case $aPanel[2]
 Switch $nMsg[0]
