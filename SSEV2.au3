@@ -92,6 +92,7 @@ Local $sTestTxt = ""
 For $i = 1 To 1
 $sTestTxt &= @TAB & "liberodark - Dev" & @CRLF
 $sTestTxt &= @TAB & "orax - Helper" & @CRLF
+$sTestTxt &= @TAB & "taietel - GUI Template" & @CRLF
 Next
 GUICtrlSetData(-1, $sTestTxt)
 GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKRIGHT + $GUI_DOCKBOTTOM)
