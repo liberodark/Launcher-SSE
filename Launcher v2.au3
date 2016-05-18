@@ -78,7 +78,7 @@ GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCK
 Global $Combo1 = GUICtrlCreateCombo("", 76, 35, 121, 21, BitOR($GUI_SS_DEFAULT_COMBO, $CBS_SIMPLE))
 GUICtrlSetData($Combo1, "English|Arabic|Brazilian|Bulgarian|Croatian|French", "French")
 GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
-Local $hButton1 = GUICtrlCreateButton("Ok", 200, 33, 75, 25)
+Local $hButton2 = GUICtrlCreateButton("Ok", 200, 33, 75, 25)
 GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
 _AddControlsToPanel($aPanel[3])
