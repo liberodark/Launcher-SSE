@@ -12,6 +12,7 @@
 #include <EditConstants.au3>
 #include <WindowsConstants.au3>
 #include <StaticConstants.au3>
+#include <File.au3>
 #region GLOBAL VARIABLES
 Global $iW = 600, $iH = 400, $iT = 52, $iB = 52, $iLeftWidth = 150, $iGap = 10, $hMainGUI
 #endregion GLOBAL VARIABLES
@@ -70,8 +71,10 @@ Local $hButton1 = GUICtrlCreateButton("Ok", 200, 33, 75, 25)
 GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
 _AddControlsToPanel($aPanel[2])
-GUICtrlCreateList("", 8, 37, 121, 93, -1, 0)
-GUICtrlSetData(-1, "English|Arabic|Brazilian|Bulgarian|Croatian|French")
+GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+Global $Combo1 = GUICtrlCreateCombo("", 56, 35, 121, 21, BitOR($GUI_SS_DEFAULT_COMBO, $CBS_SIMPLE))
+GUICtrlSetData($Combo1, "English|Arabic|Brazilian|Bulgarian|Croatian|French", "French")
+GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 Local $hButton1 = GUICtrlCreateButton("Ok", 200, 33, 75, 25)
 GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
@@ -92,6 +95,7 @@ Local $sTestTxt = ""
 For $i = 1 To 1
 $sTestTxt &= @TAB & "liberodark - Dev" & @CRLF
 $sTestTxt &= @TAB & "orax - Helper" & @CRLF
+$sTestTxt &= @TAB & "Teckos - Helper" & @CRLF
 $sTestTxt &= @TAB & "taietel - GUI Template" & @CRLF
 Next
 GUICtrlSetData(-1, $sTestTxt)
