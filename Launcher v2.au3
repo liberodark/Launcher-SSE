@@ -71,6 +71,7 @@ Local $hButton1 = GUICtrlCreateButton("Ok", 200, 33, 75, 25)
 GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
 _AddControlsToPanel($aPanel[2])
+GUICtrlCreateLabel("Languages", 8, 38, 36, 17)
 GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 Global $Combo1 = GUICtrlCreateCombo("", 56, 35, 121, 21, BitOR($GUI_SS_DEFAULT_COMBO, $CBS_SIMPLE))
 GUICtrlSetData($Combo1, "English|Arabic|Brazilian|Bulgarian|Croatian|French", "French")
