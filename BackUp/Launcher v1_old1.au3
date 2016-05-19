@@ -1,9 +1,9 @@
 #cs ----------------------------------------------------------------------------
 
-	AutoIt Version: 3.3.14.2
-	Author: liberodark
+ AutoIt Version: 3.3.14.2
+ Author: liberodark
 
-	Script Function:
+ Script Function:
 	Launcher SSE
 
 #ce ----------------------------------------------------------------------------
@@ -13,6 +13,6 @@
 #include <File.au3>
 
 MsgBox(64, "Launcher", "Lancement du jeu !")
-Run("Game\SSELauncher.exe -appid 406170", "Game\")
+Run ( "Game\SSELauncher.exe -appid 406170", "Game\" )
 _ReplaceStringInFile("Game\config.xml", "<Language>English</Language>", "<Language>French</Language>")
 Exit
