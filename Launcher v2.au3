@@ -22,7 +22,7 @@ _MainGui()
 
 Func _MainGui()
 	Local $hFooter, $nMsg, $aPos
-	Local $iLinks = 5
+	Local $iLinks = 6
 	Local $sMainGuiTitle = "Launcher SSE"
 	Local $sHeader = "Open Source Launcher (v2.0.0)"
 	Local $sFooter = "2016 © liberodark"
@@ -54,13 +54,15 @@ Func _MainGui()
 	$aLink[1] = _AddNewLink("Pseudo")
 	$aLink[2] = _AddNewLink("Language", -14)
 	$aLink[3] = _AddNewLink("Options", -22)
-	$aLink[4] = _AddNewLink("Credit", -222)
+	$aLink[4] = _AddNewLink("Launch Game", -12)
+	$aLink[5] = _AddNewLink("Credit", -222)
 
 	;and the corresponding GUI's
 	$aPanel[1] = _AddNewPanel("Enter your Pseudo")
 	$aPanel[2] = _AddNewPanel("Chose your Language")
 	$aPanel[3] = _AddNewPanel("Options")
-	$aPanel[4] = _AddNewPanel("Credits")
+	$aPanel[4] = _AddNewPanel("Launch Game")
+	$aPanel[5] = _AddNewPanel("Credits")
 
 	;add some controls to the panels
 	_AddControlsToPanel($aPanel[1])
@@ -91,7 +93,16 @@ Func _MainGui()
 	GUICtrlSetState(-1, $GUI_CHECKED)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
+	;add some controls to the panels
 	_AddControlsToPanel($aPanel[4])
+	GUICtrlCreateLabel("Select", 8, 38, 36, 17)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton3 = GUICtrlCreateButton("32bit", 56, 35, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton4 = GUICtrlCreateButton("64Bit", 150, 35, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+
+	_AddControlsToPanel($aPanel[5])
 	GUICtrlCreateEdit("", 10, 37, $iW - $iLeftWidth + 2 - 20 - 5, $iH - $iT - $iB - 40, BitOR($ES_AUTOVSCROLL, $ES_NOHIDESEL, $ES_WANTRETURN, $WS_VSCROLL), $WS_EX_STATICEDGE)
 	Local $sTestTxt = ""
 	For $i = 1 To 1
@@ -124,7 +135,7 @@ Func _MainGui()
 						For $i = 0 To $aPanel[0]
 							WinMove($aPanel[$i], "", $iLeftWidth + 2, $iT, $iW - $iLeftWidth + 2, $iH - $iT - $iB - 20)
 						Next
-					Case $aLink[1], $aLink[2], $aLink[3], $aLink[4]
+					Case $aLink[1], $aLink[2], $aLink[3], $aLink[4], $aLink[5]
 						For $i = 1 To $aLink[0]
 							If $nMsg[0] = $aLink[$i] Then
 								GUISetState(@SW_SHOW, $aPanel[$i])
