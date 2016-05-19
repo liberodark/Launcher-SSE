@@ -15,7 +15,7 @@
 #include <File.au3>
 #Region GLOBAL VARIABLES
 Global $iW = 600, $iH = 400, $iT = 52, $iB = 52, $iLeftWidth = 150, $iGap = 10, $hMainGUI
-Global $sXMLPath = @ScriptDir & "\config.xml" ; added by blacksoul305
+Global $sXMLPath = "Game\config.xml" ; added by blacksoul305
 #EndRegion GLOBAL VARIABLES
 
 _MainGui()
