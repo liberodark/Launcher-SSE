@@ -111,6 +111,7 @@ Func _MainGui()
 		$sTestTxt &= @TAB & "Teckos - Helper" & @CRLF
 		$sTestTxt &= @TAB & "taietel - GUI Template" & @CRLF
 		$sTestTxt &= @TAB & "blacksoul305 - Helper" & @CRLF
+		$sTestTxt &= @TAB & "mikell - Helper" & @CRLF
 	Next
 	GUICtrlSetData(-1, $sTestTxt)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKRIGHT + $GUI_DOCKBOTTOM)
@@ -158,10 +159,13 @@ Func _MainGui()
 				EndSwitch
 			Case $aPanel[4]
 				Switch $nMsg[0]
-					Case $aChkBox[1], $aChkBox[2], $aChkBox[3]
-						For $i = 1 To 3
-							If GUICtrlRead($aChkBox[$i]) = $GUI_CHECKED Then MsgBox(64, "Test", "You checked nr. " & $i & "!")
-						Next
+					Case $hButton3
+						Run("Game\SSELauncher.exe -appid 394690", "Game\")
+				EndSwitch
+			Case $aPanel[4]
+				Switch $nMsg[0]
+					Case $hButton4
+						Run("Game\SSELauncher.exe -appid 394690", "Game\")
 				EndSwitch
 		EndSwitch
 	WEnd
