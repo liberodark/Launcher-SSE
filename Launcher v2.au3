@@ -99,7 +99,7 @@ Func _MainGui()
 		$sTestTxt &= @TAB & "orax - Helper" & @CRLF
 		$sTestTxt &= @TAB & "Teckos - Helper" & @CRLF
 		$sTestTxt &= @TAB & "taietel - GUI Template" & @CRLF
-		$sTestTxt &= @TAB & "blacksoul305" & @CRLF
+		$sTestTxt &= @TAB & "blacksoul305 - Helper" & @CRLF
 	Next
 	GUICtrlSetData(-1, $sTestTxt)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKRIGHT + $GUI_DOCKBOTTOM)
