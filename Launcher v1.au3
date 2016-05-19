@@ -14,5 +14,4 @@
 
 MsgBox(64, "Launcher", "Lancement du jeu !")
 Run("Game\SSELauncher.exe -appid 406170", "Game\")
-_ReplaceStringInFile("Game\config.xml", "<Language>English</Language>", "<Language>French</Language>")
 Exit

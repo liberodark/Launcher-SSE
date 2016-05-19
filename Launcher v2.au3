@@ -15,7 +15,7 @@
 #include <File.au3>
 #Region GLOBAL VARIABLES
 Global $iW = 600, $iH = 400, $iT = 52, $iB = 52, $iLeftWidth = 150, $iGap = 10, $hMainGUI
-Global $sXMLPath = @ScriptDir & "Game\config.xml" ; added by blacksoul305
+Global $sXMLPath = @ScriptDir & "\config.xml" ; added by blacksoul305
 #EndRegion GLOBAL VARIABLES
 
 _MainGui()
@@ -38,11 +38,11 @@ Func _MainGui()
 
 	GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
-	GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ;separator
+	GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN);separator
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKRIGHT + $GUI_DOCKHEIGHT)
-	GUICtrlCreateLabel("", $iLeftWidth, $iT + 2, 2, $iH - $iT - $iB - 2, $SS_SUNKEN) ;separator
+	GUICtrlCreateLabel("", $iLeftWidth, $iT + 2, 2, $iH - $iT - $iB - 2, $SS_SUNKEN);separator
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKWIDTH)
-	GUICtrlCreateLabel("", 0, $iH - $iB, $iW, 2, $SS_SUNKEN) ;separator
+	GUICtrlCreateLabel("", 0, $iH - $iB, $iW, 2, $SS_SUNKEN);separator
 	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKLEFT + $GUI_DOCKRIGHT + $GUI_DOCKHEIGHT)
 
 	$hFooter = GUICtrlCreateLabel($sFooter, 10, $iH - 34, $iW - 20, 17, BitOR($SS_LEFT, $SS_CENTERIMAGE))
@@ -99,7 +99,7 @@ Func _MainGui()
 		$sTestTxt &= @TAB & "orax - Helper" & @CRLF
 		$sTestTxt &= @TAB & "Teckos - Helper" & @CRLF
 		$sTestTxt &= @TAB & "taietel - GUI Template" & @CRLF
-		$sTestTxt &= @TAB & "blacksoul305 - Helper" & @CRLF
+		$sTestTxt &= @TAB & "blacksoul305" & @CRLF
 	Next
 	GUICtrlSetData(-1, $sTestTxt)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKRIGHT + $GUI_DOCKBOTTOM)
@@ -142,8 +142,6 @@ Func _MainGui()
 				EndSwitch
 			Case $aPanel[2] ; from balcksoul305 : if $aPanel[2] represents Language section, why trying to handle events from controls based on $aPanel[1]?
 				Switch $nMsg[0]
-					Case $hButton1
-						MsgBox(32, "Test", "You have " & GUICtrlRead($hInput1) & "?") ; from blacksoul305 : this case will never ever happen because not reachable from $aPanel[2]
 					Case $hButton2 ; Added by blacksoul305
 						_SetLanguage(GUICtrlRead($Combo1), $sXMLPath)
 				EndSwitch
@@ -186,35 +184,35 @@ EndFunc   ;==>_AddControlsToPanel
 
 Func _SetLanguage($sLanguage, $sFilePath)
 ;~ 	MsgBox(64, "_SetLanguage", "Inputs are : " & @CRLF & " - " & $sLanguage & @CRLF & " - " & $sFilePath & @CRLF)
-	Local $fFile, $sBuff = "", $sNewLine, $bEnd = False, $iCurrentLine = 1
+	Local $fFile, $sBuff = "", $sNewLine, $bEnd = false, $iCurrentLine = 1
 
 	$fFile = FileOpen($sFilePath, 0) ; reading only
 	Do
 		$sBuff = FileReadLine($fFile)
-		If (StringRegExp($sBuff, "\<Language\>.*\<\/Language\>")) Then ; <Language></Language> found
-			$sNewLine = StringRegExpReplace($sBuff, "\<Language\>.*\<\/Language\>", "<Language>" & $sLanguage & "</Language>")
+		if (StringRegExp($sBuff,"\<Language\>.*\<\/Language\>")) Then ; <Language></Language> found
+			$sNewLine = StringRegExpReplace($sBuff,"\<Language\>.*\<\/Language\>", "<Language>" & $sLanguage & "</Language>")
 			_FileWriteToLine($sFilePath, $iCurrentLine, $sNewLine, True)
 			$bEnd = True
 		EndIf
-		$iCurrentLine += 1
+		$iCurrentLine+=1
 	Until ($bEnd)
 
 	FileClose($fFile)
-EndFunc   ;==>_SetLanguage
+EndFunc
 
 Func _SetName($sName, $sFilePath)
-	Local $fFile, $sBuff = "", $sNewLine, $bEnd = False, $iCurrentLine = 1
+	Local $fFile, $sBuff = "", $sNewLine, $bEnd = false, $iCurrentLine = 1
 
 	$fFile = FileOpen($sFilePath, 0) ; reading only
 	Do
 		$sBuff = FileReadLine($fFile)
-		If (StringRegExp($sBuff, "\<PersonaName\>.*\<\/PersonaName\>")) Then
-			$sNewLine = StringRegExpReplace($sBuff, "\<PersonaName\>.*\<\/PersonaName\>", "<PersonaName>" & $sName & "</PersonaName>")
+		if (StringRegExp($sBuff,"\<PersonaName\>.*\<\/PersonaName\>")) Then
+			$sNewLine = StringRegExpReplace($sBuff,"\<PersonaName\>.*\<\/PersonaName\>", "<PersonaName>" & $sName & "</PersonaName>")
 			_FileWriteToLine($sFilePath, $iCurrentLine, $sNewLine, True)
 			$bEnd = True
 		EndIf
-		$iCurrentLine += 1
+		$iCurrentLine+=1
 	Until ($bEnd)
 
 	FileClose($fFile)
-EndFunc   ;==>_SetName
+EndFunc
