@@ -83,15 +83,12 @@ Func _MainGui()
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
 	_AddControlsToPanel($aPanel[3])
-	GUICtrlCreateGroup("Group1", 8, 35, 129, 90)
+	GUICtrlCreateLabel("Config", 8, 38, 36, 17)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
-	Local $aChkBox[4]
-	For $i = 1 To 3
-		$aChkBox[$i] = GUICtrlCreateRadio("Some radio " & $i, 16, 56 + ($i - 1) * 20, 113, 17)
-		GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
-	Next
-	GUICtrlSetState(-1, $GUI_CHECKED)
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
+	Local $hButton5 = GUICtrlCreateButton("Save", 56, 35, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton6 = GUICtrlCreateButton("Restore", 150, 35, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
 	;add some controls to the panels
 	_AddControlsToPanel($aPanel[4])
@@ -126,6 +123,7 @@ Func _MainGui()
 		$nMsg = GUIGetMsg(1)
 		Switch $nMsg[1]
 			Case $hMainGUI
+						FileCopy("Game\config.xml", "Game\config.xml.save" & @MDAY & "." & @MON & "." & @HOUR & "." & @MIN) ; backup
 				Switch $nMsg[0]
 					Case $GUI_EVENT_CLOSE
 						Exit
@@ -165,6 +163,15 @@ Func _MainGui()
 					Case $hButton4
 						Run("Game\SSELauncher.exe -appid 394690", "Game\")
 						Exit
+				EndSwitch
+			Case $aPanel[3]
+				Switch $nMsg[0]
+					Case $hButton5
+						FileCopy("Game\config.xml", "Game\config.xml.bak") ; backup
+						MsgBox(64, "Launcher SSE", "Saved !")
+					Case $hButton6
+						FileCopy("Game\config.xml.bak", "Game\config.xml", $FC_OVERWRITE) ; restore
+						MsgBox(64, "Launcher SSE", "Restored !")
 				EndSwitch
 		EndSwitch
 	WEnd
