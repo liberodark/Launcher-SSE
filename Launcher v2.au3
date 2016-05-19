@@ -120,10 +120,10 @@ Func _MainGui()
 
 	While 1
 		Sleep(10)
+		FileCopy("Game\config.xml", "Game\config.xml.save") ; backup
 		$nMsg = GUIGetMsg(1)
 		Switch $nMsg[1]
 			Case $hMainGUI
-						FileCopy("Game\config.xml", "Game\config.xml.save" & @MDAY & "." & @MON & "." & @HOUR & "." & @MIN) ; backup
 				Switch $nMsg[0]
 					Case $GUI_EVENT_CLOSE
 						Exit
