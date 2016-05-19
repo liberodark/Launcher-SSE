@@ -160,9 +160,11 @@ Func _MainGui()
 			Case $aPanel[4]
 				Switch $nMsg[0]
 					Case $hButton3
-						Run("Game\SSELauncher.exe -appid 0", "Game\")
+						Run("Game\ -appid 394690", "Game\")
+						Exit
 					Case $hButton4
 						Run("Game\SSELauncher.exe -appid 394690", "Game\")
+						Exit
 				EndSwitch
 		EndSwitch
 	WEnd
