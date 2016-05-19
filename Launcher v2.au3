@@ -15,6 +15,7 @@
 #include <File.au3>
 #Region GLOBAL VARIABLES
 Global $iW = 600, $iH = 400, $iT = 52, $iB = 52, $iLeftWidth = 150, $iGap = 10, $hMainGUI
+Global $sXMLPath = @ScriptDir & "Game\config.xml" ; added by blacksoul305
 #EndRegion GLOBAL VARIABLES
 
 _MainGui()
@@ -98,6 +99,7 @@ Func _MainGui()
 		$sTestTxt &= @TAB & "orax - Helper" & @CRLF
 		$sTestTxt &= @TAB & "Teckos - Helper" & @CRLF
 		$sTestTxt &= @TAB & "taietel - GUI Template" & @CRLF
+		$sTestTxt &= @TAB & "blacksoul305 - Helper" & @CRLF
 	Next
 	GUICtrlSetData(-1, $sTestTxt)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKRIGHT + $GUI_DOCKBOTTOM)
@@ -133,10 +135,17 @@ Func _MainGui()
 					Case $hFooter
 						ShellExecute("https://github.com/liberodark/Launcher-SSE")
 				EndSwitch
-			Case $aPanel[2]
+			Case $aPanel[1] ; added by blacksoul305
 				Switch $nMsg[0]
 					Case $hButton1
-						MsgBox(32, "Test", "You have " & GUICtrlRead($hInput1) & "?")
+						_SetName(GUICtrlRead($hInput1), $sXMLPath)
+				EndSwitch
+			Case $aPanel[2] ; from balcksoul305 : if $aPanel[2] represents Language section, why trying to handle events from controls based on $aPanel[1]?
+				Switch $nMsg[0]
+					Case $hButton1
+						MsgBox(32, "Test", "You have " & GUICtrlRead($hInput1) & "?") ; from blacksoul305 : this case will never ever happen because not reachable from $aPanel[2]
+					Case $hButton2 ; Added by blacksoul305
+						_SetLanguage(GUICtrlRead($Combo1), $sXMLPath)
 				EndSwitch
 			Case $aPanel[4]
 				Switch $nMsg[0]
@@ -170,3 +179,42 @@ EndFunc   ;==>_AddNewPanel
 Func _AddControlsToPanel($hPanel)
 	GUISwitch($hPanel)
 EndFunc   ;==>_AddControlsToPanel
+
+;~ -------------------------------------------------------------------------
+;~ ------------------	Added by blakcsoul305 ------------------------------
+;~ -------------------------------------------------------------------------
+
+Func _SetLanguage($sLanguage, $sFilePath)
+;~ 	MsgBox(64, "_SetLanguage", "Inputs are : " & @CRLF & " - " & $sLanguage & @CRLF & " - " & $sFilePath & @CRLF)
+	Local $fFile, $sBuff = "", $sNewLine, $bEnd = False, $iCurrentLine = 1
+
+	$fFile = FileOpen($sFilePath, 0) ; reading only
+	Do
+		$sBuff = FileReadLine($fFile)
+		If (StringRegExp($sBuff, "\<Language\>.*\<\/Language\>")) Then ; <Language></Language> found
+			$sNewLine = StringRegExpReplace($sBuff, "\<Language\>.*\<\/Language\>", "<Language>" & $sLanguage & "</Language>")
+			_FileWriteToLine($sFilePath, $iCurrentLine, $sNewLine, True)
+			$bEnd = True
+		EndIf
+		$iCurrentLine += 1
+	Until ($bEnd)
+
+	FileClose($fFile)
+EndFunc   ;==>_SetLanguage
+
+Func _SetName($sName, $sFilePath)
+	Local $fFile, $sBuff = "", $sNewLine, $bEnd = False, $iCurrentLine = 1
+
+	$fFile = FileOpen($sFilePath, 0) ; reading only
+	Do
+		$sBuff = FileReadLine($fFile)
+		If (StringRegExp($sBuff, "\<PersonaName\>.*\<\/PersonaName\>")) Then
+			$sNewLine = StringRegExpReplace($sBuff, "\<PersonaName\>.*\<\/PersonaName\>", "<PersonaName>" & $sName & "</PersonaName>")
+			_FileWriteToLine($sFilePath, $iCurrentLine, $sNewLine, True)
+			$bEnd = True
+		EndIf
+		$iCurrentLine += 1
+	Until ($bEnd)
+
+	FileClose($fFile)
+EndFunc   ;==>_SetName
