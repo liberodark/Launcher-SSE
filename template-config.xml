@@ -14,7 +14,6 @@
     <InjectDll>false</InjectDll>
     <PersonaName>liberodark</PersonaName>
     <AppId>10</AppId>
-    <SteamIdGeneration>PersonaName</SteamIdGeneration>
     <ManualSteamId>-1</ManualSteamId>
     <Language>French</Language>
     <LowViolence>-1</LowViolence>
