@@ -12,8 +12,6 @@
 #include <EditConstants.au3>
 #include <WindowsConstants.au3>
 #include <StaticConstants.au3>
-#include <GUIConstantsEx.au3>
-#include <ComboConstants.au3>
 #include <File.au3>
 #region GLOBAL VARIABLES
 Global $iW = 600, $iH = 400, $iT = 52, $iB = 52, $iLeftWidth = 150, $iGap = 10, $hMainGUI
