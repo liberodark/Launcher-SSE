@@ -234,7 +234,7 @@ Func _MainGui()
 						MsgBox(64, "Launcher SSE", "Desactived !")
 					Case $hButton15
 						MsgBox(64, "Launcher SSE", "Remove plugins remove overlay and online options !")
-						DirRemove("Game\SmartSteamEmu\SmartSteamEmu\Plugins") ; Remove plugins
+						DirRemove("Game\SmartSteamEmu\SmartSteamEmu\Plugins", $DIR_REMOVE) ; Remove plugins
 						MsgBox(64, "Launcher SSE", "Removed !")
 					Case $hButton16
 						MsgBox(64, "Launcher SSE", "Reset Configuration remove name and other options !")
