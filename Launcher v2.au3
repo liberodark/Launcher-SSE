@@ -24,7 +24,7 @@ Func _MainGui()
 	Local $hFooter, $nMsg, $aPos
 	Local $iLinks = 6
 	Local $sMainGuiTitle = "Launcher SSE"
-	Local $sHeader = "Open Source Launcher (v2.0.0)"
+	Local $sHeader = "Open Source Launcher (v2.0.1)"
 	Local $sFooter = "2016 © liberodark"
 	Local $aLink[$iLinks], $aPanel[$iLinks]
 	$aLink[0] = $iLinks - 1
