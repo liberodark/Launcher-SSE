@@ -83,16 +83,48 @@ Func _MainGui()
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
 	_AddControlsToPanel($aPanel[3])
-	GUICtrlCreateLabel("Config", 8, 38, 36, 17)
+	GUICtrlCreateLabel("Config", 8, 40, 36, 17)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 	Local $hButton5 = GUICtrlCreateButton("Save", 56, 35, 75, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 	Local $hButton6 = GUICtrlCreateButton("Restore", 150, 35, 75, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	GUICtrlCreateLabel("Steam", 8, 70, 36, 17)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton7 = GUICtrlCreateButton("Online", 56, 65, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton8 = GUICtrlCreateButton("Offline", 150, 65, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	GUICtrlCreateLabel("Online", 8, 100, 36, 17)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton9 = GUICtrlCreateButton("On", 56, 95, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton10 = GUICtrlCreateButton("Off", 150, 95, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	GUICtrlCreateLabel("Overlay", 8, 130, 36, 17)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton11 = GUICtrlCreateButton("On", 56, 125, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton12 = GUICtrlCreateButton("Off", 150, 125, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	GUICtrlCreateLabel("VR", 8, 160, 36, 17)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton13 = GUICtrlCreateButton("On", 56, 155, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton14 = GUICtrlCreateButton("Off", 150, 155, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	GUICtrlCreateLabel("Plugins", 8, 190, 36, 17)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton15 = GUICtrlCreateButton("Remove", 56, 185, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	GUICtrlCreateLabel("Reset", 8, 220, 36, 17)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $hButton16 = GUICtrlCreateButton("Reset", 56, 215, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
 	;add some controls to the panels
 	_AddControlsToPanel($aPanel[4])
-	GUICtrlCreateLabel("Select", 8, 38, 36, 17)
+	GUICtrlCreateLabel("Select", 8, 40, 36, 17)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 	Local $hButton3 = GUICtrlCreateButton("32bit", 56, 35, 75, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
@@ -172,6 +204,37 @@ Func _MainGui()
 					Case $hButton6
 						FileCopy("Game\config.xml.bak", "Game\config.xml", $FC_OVERWRITE) ; restore
 						MsgBox(64, "Launcher SSE", "Restored !")
+					Case $hButton7
+						_ReplaceStringInFile("Game\config.xml", "<Offline>0</Offline>", "<Offline>1</Offline>") ; Steam Online
+						MsgBox(64, "Launcher SSE", "Actived !")
+					Case $hButton8
+						_ReplaceStringInFile("Game\config.xml", "<Offline>1</Offline>", "<Offline>0</Offline>") ; Steam Online
+						MsgBox(64, "Launcher SSE", "Desactived !")
+					Case $hButton9
+						_ReplaceStringInFile("Game\config.xml", "<EnableOnlinePlay>-1</EnableOnlinePlay>", "<EnableOnlinePlay>1</EnableOnlinePlay>") ; Online On
+						MsgBox(64, "Launcher SSE", "Actived !")
+					Case $hButton10
+						_ReplaceStringInFile("Game\config.xml", "<EnableOnlinePlay>1</EnableOnlinePlay>", "<EnableOnlinePlay>-1</EnableOnlinePlay>") ; Online Off
+						MsgBox(64, "Launcher SSE", "Desactived !")
+					Case $hButton11
+						_ReplaceStringInFile("Game\config.xml", "<EnableOverlay>-1</EnableOverlay>", "<EnableOverlay>1</EnableOverlay>") ; Overlay On
+						MsgBox(64, "Launcher SSE", "Actived !")
+					Case $hButton12
+						_ReplaceStringInFile("Game\config.xml", "<EnableOverlay>1</EnableOverlay>", "<EnableOverlay>0</EnableOverlay>") ; Overlay Off
+						MsgBox(64, "Launcher SSE", "Desactived !")
+					Case $hButton13
+						_ReplaceStringInFile("Game\config.xml", "<VR>-1</VR>", "<VR>1</VR>") ; VR On
+						MsgBox(64, "Launcher SSE", "Actived !")
+					Case $hButton14
+						_ReplaceStringInFile("Game\config.xml", "<VR>1</VR>", "<VR>-1</VR>") ; VR Off
+						MsgBox(64, "Launcher SSE", "Desactived !")
+					Case $hButton15
+						DirRemove("Game\SmartSteamEmu\SmartSteamEmu\Plugins") ; Remove plugins
+						MsgBox(64, "Launcher SSE", "Removed !")
+					Case $hButton16
+						MsgBox(64, "Launcher SSE", "Reset Configuration remove name and other options !")
+						FileCopy("Game\config.xml.save", "Game\config.xml", $FC_OVERWRITE) ; restore / Reset
+						MsgBox(64, "Launcher SSE", "Success !")
 				EndSwitch
 		EndSwitch
 	WEnd
