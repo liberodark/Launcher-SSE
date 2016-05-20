@@ -205,30 +205,35 @@ Func _MainGui()
 						FileCopy("Game\config.xml.bak", "Game\config.xml", $FC_OVERWRITE) ; restore
 						MsgBox(64, "Launcher SSE", "Restored !")
 					Case $hButton7
-						_ReplaceStringInFile("Game\config.xml", "<Offline>0</Offline>", "<Offline>1</Offline>") ; Steam Online
+						_ReplaceStringInFile("Game\config.xml", "<Offline>-1</Offline>", "<Offline>1</Offline>") ; Steam Online
+						_ReplaceStringInFile("Game\config.xml", "<Offline>0</Offline>", "<Offline>1</Offline>")
 						MsgBox(64, "Launcher SSE", "Actived !")
 					Case $hButton8
 						_ReplaceStringInFile("Game\config.xml", "<Offline>1</Offline>", "<Offline>0</Offline>") ; Steam Online
 						MsgBox(64, "Launcher SSE", "Desactived !")
 					Case $hButton9
 						_ReplaceStringInFile("Game\config.xml", "<EnableOnlinePlay>-1</EnableOnlinePlay>", "<EnableOnlinePlay>1</EnableOnlinePlay>") ; Online On
+						_ReplaceStringInFile("Game\config.xml", "<EnableOnlinePlay>0</EnableOnlinePlay>", "<EnableOnlinePlay>1</EnableOnlinePlay>")
 						MsgBox(64, "Launcher SSE", "Actived !")
 					Case $hButton10
-						_ReplaceStringInFile("Game\config.xml", "<EnableOnlinePlay>1</EnableOnlinePlay>", "<EnableOnlinePlay>-1</EnableOnlinePlay>") ; Online Off
+						_ReplaceStringInFile("Game\config.xml", "<EnableOnlinePlay>1</EnableOnlinePlay>", "<EnableOnlinePlay>0</EnableOnlinePlay>") ; Online Off
 						MsgBox(64, "Launcher SSE", "Desactived !")
 					Case $hButton11
 						_ReplaceStringInFile("Game\config.xml", "<EnableOverlay>-1</EnableOverlay>", "<EnableOverlay>1</EnableOverlay>") ; Overlay On
+						_ReplaceStringInFile("Game\config.xml", "<EnableOverlay>0</EnableOverlay>", "<EnableOverlay>1</EnableOverlay>")
 						MsgBox(64, "Launcher SSE", "Actived !")
 					Case $hButton12
 						_ReplaceStringInFile("Game\config.xml", "<EnableOverlay>1</EnableOverlay>", "<EnableOverlay>0</EnableOverlay>") ; Overlay Off
 						MsgBox(64, "Launcher SSE", "Desactived !")
 					Case $hButton13
 						_ReplaceStringInFile("Game\config.xml", "<VR>-1</VR>", "<VR>1</VR>") ; VR On
+						_ReplaceStringInFile("Game\config.xml", "<VR>0</VR>", "<VR>1</VR>")
 						MsgBox(64, "Launcher SSE", "Actived !")
 					Case $hButton14
-						_ReplaceStringInFile("Game\config.xml", "<VR>1</VR>", "<VR>-1</VR>") ; VR Off
+						_ReplaceStringInFile("Game\config.xml", "<VR>1</VR>", "<VR>0</VR>") ; VR Off
 						MsgBox(64, "Launcher SSE", "Desactived !")
 					Case $hButton15
+						MsgBox(64, "Launcher SSE", "Remove plugins remove overlay and online options !")
 						DirRemove("Game\SmartSteamEmu\SmartSteamEmu\Plugins") ; Remove plugins
 						MsgBox(64, "Launcher SSE", "Removed !")
 					Case $hButton16
