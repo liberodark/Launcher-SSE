@@ -24,7 +24,7 @@ Func _MainGui()
 	Local $hFooter, $nMsg, $aPos
 	Local $iLinks = 6
 	Local $sMainGuiTitle = "Launcher SSE"
-	Local $sHeader = "Open Source Launcher (v2.0.2)"
+	Local $sHeader = "Open Source Launcher (v2.0.1)"
 	Local $sFooter = "2016 © liberodark"
 	Local $aLink[$iLinks], $aPanel[$iLinks]
 	$aLink[0] = $iLinks - 1
@@ -71,7 +71,7 @@ Func _MainGui()
 	Local $sXMLPath = "Game\config.xml"
 	Local $currentname = "your name here"  ; nom par défaut
 	If FileExists($sXMLPath) Then
-    $currentname = StringRegExpReplace(FileRead($sXMLPath), '(?s).*<PersonaName>([^<]+).*', "$1")
+    $currentname = StringRegExpReplace(FileRead($sXMLPath), '(?s).*?<PersonaName>([^<]+).*', "$1")
 	EndIf
 	Local $hInput1 = GUICtrlCreateInput($currentname, 56, 35, 121, 21)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
