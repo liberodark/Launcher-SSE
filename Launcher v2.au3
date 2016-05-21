@@ -137,7 +137,7 @@ Func _MainGui()
 	Local $sXMLPath = "Game\config.xml"
 	Local $currentappid1 = "AppID 2"  ; AppId
 	If FileExists($sXMLPath) Then
-    $currentappid1 = StringRegExpReplace(FileRead($sXMLPath), '(?s).*<PersonaName>([^<]+).*', "$1")
+    $currentappid1 = StringRegExpReplace(FileRead($sXMLPath), '(?s).*<AppId>([^<]+).*', "$1")
 	EndIf
 	Local $hInput3 = GUICtrlCreateInput($currentappid1, 150, 245, 75, 25)
 	Local $hButton17 = GUICtrlCreateButton("Save", 240, 245, 75, 25)
