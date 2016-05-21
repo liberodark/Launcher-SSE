@@ -24,7 +24,7 @@ Func _MainGui()
 	Local $hFooter, $nMsg, $aPos
 	Local $iLinks = 6
 	Local $sMainGuiTitle = "Launcher SSE"
-	Local $sHeader = "Open Source Launcher (v2.0.1)"
+	Local $sHeader = "Open Source Launcher (v2.0.2)"
 	Local $sFooter = "2016 © liberodark"
 	Local $aLink[$iLinks], $aPanel[$iLinks]
 	$aLink[0] = $iLinks - 1
@@ -68,7 +68,12 @@ Func _MainGui()
 	_AddControlsToPanel($aPanel[1])
 	GUICtrlCreateLabel("Name", 8, 38, 36, 17)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
-	Local $hInput1 = GUICtrlCreateInput("your name here", 56, 35, 121, 21)
+	Local $sXMLPath = "Game\config.xml"
+	Local $currentname = "your name here"  ; nom par défaut
+	If FileExists($sXMLPath) Then
+    $currentname = StringRegExpReplace(FileRead($sXMLPath), '(?s).*<PersonaName>([^<]+).*', "$1")
+	EndIf
+	Local $hInput1 = GUICtrlCreateInput($currentname, 56, 35, 121, 21)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 	Local $hButton1 = GUICtrlCreateButton("Ok", 180, 33, 75, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
