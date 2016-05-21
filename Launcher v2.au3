@@ -24,7 +24,7 @@ Func _MainGui()
 	Local $hFooter, $nMsg, $aPos
 	Local $iLinks = 6
 	Local $sMainGuiTitle = "Launcher SSE"
-	Local $sHeader = "Open Source Launcher (v2.0.2)"
+	Local $sHeader = "Open Source Launcher (v2.0.3)"
 	Local $sFooter = "2016 © liberodark"
 	Local $aLink[$iLinks], $aPanel[$iLinks]
 	$aLink[0] = $iLinks - 1
@@ -211,10 +211,10 @@ Func _MainGui()
 			Case $aPanel[4]
 				Switch $nMsg[0]
 					Case $hButton3
-						Run("Game\ -appid 394690", "Game\")
+						Run("Game\SSELauncher.exe -appid " & $currentappid, "Game\")
 						Exit
 					Case $hButton4
-						Run("Game\SSELauncher.exe -appid 394690", "Game\")
+						Run("Game\SSELauncher.exe -appid " & $currentappid1, "Game\")
 						Exit
 				EndSwitch
 			Case $aPanel[3]
