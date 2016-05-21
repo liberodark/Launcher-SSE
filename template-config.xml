@@ -5,9 +5,9 @@
     <DlcList />
     <DirectPatchList />
     <IconPath />
-    <GameName>gocco_of_war_64</GameName>
+    <GameName></GameName>
     <Category />
-    <Path>\gocco_of_war_64.exe</Path>
+    <Path></Path>
     <CommandLine />
     <StartIn>\</StartIn>
     <Persist>false</Persist>
