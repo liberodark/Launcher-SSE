@@ -24,7 +24,7 @@ Func _MainGui()
 	Local $hFooter, $nMsg, $aPos
 	Local $iLinks = 6
 	Local $sMainGuiTitle = "Launcher SSE"
-	Local $sHeader = "Open Source Launcher (v2.0.1)"
+	Local $sHeader = "Open Source Launcher (v2.0.2)"
 	Local $sFooter = "2016 © liberodark"
 	Local $aLink[$iLinks], $aPanel[$iLinks]
 	$aLink[0] = $iLinks - 1
@@ -125,6 +125,20 @@ Func _MainGui()
 	GUICtrlCreateLabel("Reset", 8, 220, 36, 17)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 	Local $hButton16 = GUICtrlCreateButton("Reset", 56, 215, 75, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	GUICtrlCreateLabel("Appid", 8, 250, 36, 17)
+	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
+	Local $sXMLPath = "Game\config.xml"
+	If FileExists($sXMLPath) Then
+    $currentappid = StringRegExpReplace(FileRead($sXMLPath), '(?s).*?<AppId>([^<]+).*', "$1")
+	EndIf
+	Local $hInput2 = GUICtrlCreateInput($currentappid, 56, 245, 75, 25)
+	Local $sXMLPath = "Game\config.xml"
+	If FileExists($sXMLPath) Then
+    $currentappid = StringRegExpReplace(FileRead($sXMLPath), '(?s).*?<AppId>([^<]+).*', "$1")
+	EndIf
+	Local $hInput3 = GUICtrlCreateInput($currentappid, 150, 245, 75, 25)
+	Local $hButton17 = GUICtrlCreateButton("Save", 240, 245, 75, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 
 	;add some controls to the panels
