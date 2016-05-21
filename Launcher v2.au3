@@ -129,11 +129,13 @@ Func _MainGui()
 	GUICtrlCreateLabel("Appid", 8, 250, 36, 17)
 	GUICtrlSetResizing(-1, $GUI_DOCKTOP + $GUI_DOCKLEFT + $GUI_DOCKWIDTH + $GUI_DOCKHEIGHT)
 	Local $sXMLPath = "Game\config.xml"
+	Local $currentappid = "AppID"  ; AppId
 	If FileExists($sXMLPath) Then
     $currentappid = StringRegExpReplace(FileRead($sXMLPath), '(?s).*?<AppId>([^<]+).*', "$1")
 	EndIf
 	Local $hInput2 = GUICtrlCreateInput($currentappid, 56, 245, 75, 25)
 	Local $sXMLPath = "Game\config.xml"
+	Local $currentappid = "AppID"  ; AppId
 	If FileExists($sXMLPath) Then
     $currentappid = StringRegExpReplace(FileRead($sXMLPath), '(?s).*?<AppId>([^<]+).*', "$1")
 	EndIf
