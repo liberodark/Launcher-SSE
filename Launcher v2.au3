@@ -205,11 +205,11 @@ Func _MainGui()
 						FileCopy("Game\config.xml.bak", "Game\config.xml", $FC_OVERWRITE) ; restore
 						MsgBox(64, "Launcher SSE", "Restored !")
 					Case $hButton7
-						_ReplaceStringInFile("Game\config.xml", "<Offline>-1</Offline>", "<Offline>1</Offline>") ; Steam Online
-						_ReplaceStringInFile("Game\config.xml", "<Offline>0</Offline>", "<Offline>1</Offline>")
+						_ReplaceStringInFile("Game\config.xml", "<Offline>-1</Offline>", "<Offline>0</Offline>") ; Steam Online
+						_ReplaceStringInFile("Game\config.xml", "<Offline>1</Offline>", "<Offline>0</Offline>")
 						MsgBox(64, "Launcher SSE", "Actived !")
 					Case $hButton8
-						_ReplaceStringInFile("Game\config.xml", "<Offline>1</Offline>", "<Offline>0</Offline>") ; Steam Online
+						_ReplaceStringInFile("Game\config.xml", "<Offline>0</Offline>", "<Offline>1</Offline>") ; Steam Offline
 						MsgBox(64, "Launcher SSE", "Desactived !")
 					Case $hButton9
 						_ReplaceStringInFile("Game\config.xml", "<EnableOnlinePlay>-1</EnableOnlinePlay>", "<EnableOnlinePlay>1</EnableOnlinePlay>") ; Online On
