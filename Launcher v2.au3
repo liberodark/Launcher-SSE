@@ -12,7 +12,7 @@
 #include <File.au3>
 
 Global $sXMLPath = "Game\config.xml"
-If not FileExists($sXMLPath) Then Exit Msgbox(48, "error", "config.xml absent")
+If not FileExists($sXMLPath) Then Exit Msgbox(48, "erreur", "fichier config.xml absent")
 
 Global $savedXML = "Game\config.xml.save"
 If not FileExists($savedXML) Then FileCopy($sXMLPath, $savedXML) ; backup in launch
@@ -36,16 +36,17 @@ $currentOnlinePlay = StringRegExpReplace($sXMLContent, '(?s).*?<EnableOnlinePlay
 $currentOverlay = StringRegExpReplace($sXMLContent, '(?s).*?<EnableOverlay>([^<]+).*', "$1")
 $currentappid = StringRegExpReplace($sXMLContent, '(?s).*?<AppId>([^<]+).*', "$1")
 
-$currentappid1 = "" ; "AppID 2"  ; AppId
-; teste s'il y a 2 lignes <AppId>
+$currentappid1 = ""
+; test 2 appid <AppId>
 StringReplace($sXMLContent, '<AppId>', '<AppId>')
-If @extended > 1 Then $currentappid1 = StringRegExpReplace($sXMLContent, '(?s).*<AppId>([^<]+).*', "$1")
+$nbAppid = @extended
+If $nbAppid = 2 Then $currentappid1 = StringRegExpReplace($sXMLContent, '(?s).*<AppId>([^<]+).*', "$1")
 
 ; ====== gui ========
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher (v2.0.4)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher (v2.0.3)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN)   ; separator
@@ -94,8 +95,10 @@ Local $hButton2 = GUICtrlCreateButton("Ok", 200, 33, 75, 25)
 
 _AddControlsToPanel($aPanel[3])
 GUICtrlCreateLabel("Appid", 18, 45, 36, 17)
-Local $hInput2 = GUICtrlCreateInput($currentappid, 90, 42, 70, 20)
-Local $hInput3 = GUICtrlCreateInput($currentappid1, 165, 42, 70, 20)
+Local $hInput2 = GUICtrlCreateInput($currentappid, 80, 42, 70, 20)
+Local $hInput3 = GUICtrlCreateInput($currentappid1, 155, 42, 70, 20)
+If $nbAppid = 1 Then GUICtrlSetState(-1, $GUI_DISABLE)
+Local $btn_appid = GUICtrlCreateButton("Save", 235, 41, 50, 22)
 GUIStartGroup()
 GUICtrlCreateLabel("Steam Online", 18, 75, 80, 17)
 Local $hButton7 = GUICtrlCreateRadio("Online", 100, 70, 50, 25)
@@ -167,7 +170,7 @@ While 1
          Switch $nMsg[0]
             Case $GUI_EVENT_CLOSE
                If $modified = 0 Then Exit
-               If MsgBox(33, "Launcher SSE", "Keep these modifications ?") <> 1 Then
+               If MsgBox(36, "Launcher SSE", "Keep these modifications ?") <> 6 Then
                   FileCopy($backupXML, $sXMLPath, $FC_OVERWRITE) ; restore
                   MsgBox(64, "Launcher SSE", "OK, maybe next time... see you later")
                EndIf
@@ -197,6 +200,8 @@ While 1
          EndSwitch
       Case $aPanel[3]
          Switch $nMsg[0]
+            Case $btn_appid
+               _UpdateXML($sXMLPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
             Case $hButton7
                _UpdateXML($sXMLPath, "Offline", "0") ; Steam Online
             Case $hButton8
@@ -255,44 +260,18 @@ While 1
       Case $aPanel[5]
          Switch $nMsg[0]
             Case $hButton3
-               Run("Game\SSELauncher.exe -appid " & $currentappid, "Game\")
+               MsgBox(32, "test", "AppId utilisée : " & GUICtrlRead($hInput2))
+               Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput2), "Game\")
                Exit
             Case $hButton4
-               Run("Game\SSELauncher.exe -appid " & $currentappid1, "Game\")
+               Switch $nbAppId
+                  Case 1
+                     MsgBox(32, "test", "AppId utilisée : " & GUICtrlRead($hInput2))
+                     Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput2), "Game\")
+                  Case 2
+                     MsgBox(32, "test", "AppId utilisée : " & GUICtrlRead($hInput3))
+                     Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput3), "Game\")
+               EndSwitch
                Exit
          EndSwitch
    EndSwitch
-WEnd
-
-
-;==================================================
-
-Func _UpdateXML($sFilePath, $option, $value)
-   Local $content = FileRead($sFilePath)
-   Local $new = StringRegExpReplace($content, '(?<=<' & $option & '>)[^<]*', $value, 1)
-   Local $hFile = FileOpen($sFilePath, 2)
-   FileWrite($hFile, $new)
-   FileClose($hFile)
-   $modified = 1
-   MsgBox(64, "Launcher SSE", 'Modification "' & $option & ' = ' & $value & '" saved')
-EndFunc
-
-Func _AddNewLink($sTxt, $iIcon = -44)
-   Local $hLink = GUICtrlCreateLabel($sTxt, 36, $iT+$iGap, $iLeftWidth-46, 17)
-   GUICtrlSetCursor(-1, 0)
-   GUICtrlCreateIcon("shell32.dll", $iIcon, 10, $iT+$iGap, 16, 16)
-   $iGap += 22
-   Return $hLink
-EndFunc   ;==>_AddNewLink
-
-Func _AddNewPanel($sTxt)
-   Local $gui = GUICreate("", $iW-$iLeftWidth+2, $iH-$iT-$iB, $iLeftWidth+2, $iT, $WS_CHILD, -1, $hMainGUI)
-   ;+$WS_VISIBLE
-   GUICtrlCreateLabel($sTxt, 10, 10, $iW-$iLeftWidth-20, 17, $SS_CENTERIMAGE)
-   GUICtrlSetFont(-1, 9, 800, 4, "Arial", 5)
-   Return $gui
-EndFunc   ;==>_AddNewPanel
-
-Func _AddControlsToPanel($hPanel)
-   GUISwitch($hPanel)
-EndFunc   ;==>_AddControlsToPanel
