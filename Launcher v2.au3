@@ -12,7 +12,7 @@
 #include <File.au3>
 
 Global $sXMLPath = "Game\config.xml"
-If not FileExists($sXMLPath) Then Exit Msgbox(48, "erreur", "fichier config.xml absent")
+If not FileExists($sXMLPath) Then Exit Msgbox(48, "error", "config.xml absent")
 
 Global $savedXML = "Game\config.xml.save"
 If not FileExists($savedXML) Then FileCopy($sXMLPath, $savedXML) ; backup in launch
