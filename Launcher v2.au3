@@ -25,7 +25,7 @@ Global $PluginsDirBak = "Game\SmartSteamEmu\SmartSteamEmu\PluginsBak"
 Global $iW = 500, $iH = 400, $iT = 52, $iB = 27, $iLeftWidth = 150, $iGap = 10, $hMainGUI, $modified = 0
 
 ; ==================
-; read du xml
+; read xml
 $sXMLContent = FileRead($sXMLPath)
 
 $currentname = StringRegExpReplace($sXMLContent, '(?s).*?<PersonaName>([^<]+).*', "$1")
@@ -46,7 +46,7 @@ If $nbAppid = 2 Then $currentappid1 = StringRegExpReplace($sXMLContent, '(?s).*<
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher (v2.0.3)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher (v2.0.5)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN)   ; separator
@@ -275,3 +275,41 @@ While 1
                Exit
          EndSwitch
    EndSwitch
+WEnd
+
+
+;==================================================
+
+Func _UpdateXML($sFilePath, $option, $value1, $value2 = "")
+   Local $content = FileRead($sFilePath), $new, $text
+   $new = StringRegExpReplace($content, '(?<=<' & $option & '>)[^<]*', $value1, 1)
+   $text = 'Modification "' & $option & ' = ' & $value1 & '" saved'
+        If $value2 <> "" Then
+      $new = StringRegExpReplace($new, '(?s).*\K(?<=<' & $option & '>)[^<]*', $value2, 1)
+      $text &= @crlf & 'Modification "' & $option & '2 = ' & $value2 & '" saved'
+   EndIf
+   Local $hFile = FileOpen($sFilePath, 2)
+   FileWrite($hFile, $new)
+   FileClose($hFile)
+   $modified = 1
+   MsgBox(64, "Launcher SSE", $text)
+EndFunc
+
+Func _AddNewLink($sTxt, $iIcon = -44)
+   Local $hLink = GUICtrlCreateLabel($sTxt, 36, $iT+$iGap, $iLeftWidth-46, 17)
+   GUICtrlSetCursor(-1, 0)
+   GUICtrlCreateIcon("shell32.dll", $iIcon, 10, $iT+$iGap, 16, 16)
+   $iGap += 22
+   Return $hLink
+EndFunc   ;==>_AddNewLink
+
+Func _AddNewPanel($sTxt)
+   Local $gui = GUICreate("", $iW-$iLeftWidth+2, $iH-$iT-$iB, $iLeftWidth+2, $iT, $WS_CHILD, -1, $hMainGUI)
+   GUICtrlCreateLabel($sTxt, 10, 10, $iW-$iLeftWidth-20, 17, $SS_CENTERIMAGE)
+   GUICtrlSetFont(-1, 9, 800, 4, "Arial", 5)
+   Return $gui
+EndFunc   ;==>_AddNewPanel
+
+Func _AddControlsToPanel($hPanel)
+   GUISwitch($hPanel)
+EndFunc   ;==>_AddControlsToPanel
