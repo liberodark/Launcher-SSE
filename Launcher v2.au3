@@ -260,16 +260,13 @@ While 1
       Case $aPanel[5]
          Switch $nMsg[0]
             Case $hButton3
-               MsgBox(32, "test", "AppId use : " & GUICtrlRead($hInput2))
                Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput2), "Game\")
                Exit
             Case $hButton4
                Switch $nbAppId
                   Case 1
-                     MsgBox(32, "test", "AppId use : " & GUICtrlRead($hInput2))
                      Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput2), "Game\")
                   Case 2
-                     MsgBox(32, "test", "AppId use : " & GUICtrlRead($hInput3))
                      Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput3), "Game\")
                EndSwitch
                Exit
