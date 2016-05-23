@@ -51,7 +51,7 @@ GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN)   ; separator
 GUICtrlCreateLabel("", $iLeftWidth, $iT + 2, 2, $iH - $iT - $iB - 2, $SS_SUNKEN)   ; separator
 GUICtrlCreateLabel("", 0, $iH - $iB, $iW, 2, $SS_SUNKEN)   ; separator
-$hFooter = GUICtrlCreateLabel("© 2016 Š liberodark", 10, $iH - 18, $iW - 20, 17)
+$hFooter = GUICtrlCreateLabel("© 2016 liberodark", 10, $iH - 18, $iW - 20, 17)
 GUICtrlSetTip(-1, "GitHub", "Click to open...")
 GUICtrlSetCursor(-1, 0)
 
