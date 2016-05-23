@@ -58,7 +58,7 @@ Func _CheckVersion()
    If StringReplace($currentversion, ".", "") < StringReplace($lastversion, ".", "") Then  ; ex. si 204 < 205
        If Msgbox(36, "Update", "Have new version" &@crlf& "Download ?") = 6 Then
           $adresse = StringRegExp($remotedat, 'adresse=(\N+)', 1)[0]
-          InetGet($adresse, @desktopdir & "\Launcher_v." & $lastversion & ".exe")
+          InetGet($adresse, @WorkingDir & "\Launcher_v." & $lastversion & ".exe")
           If not @error Then
              IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
              Return 1   ; ok
@@ -72,7 +72,7 @@ EndFunc
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher (v2.0.6)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher (v2.0.7)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN)   ; separator
