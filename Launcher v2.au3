@@ -58,7 +58,7 @@ Func _CheckVersion()
    If StringReplace($currentversion, ".", "") < StringReplace($lastversion, ".", "") Then  ; ex. si 204 < 205
        If Msgbox(36, "Update", "Have new version" &@crlf& "Download ?") = 6 Then
           $adresse = StringRegExp($remotedat, 'adresse=(\N+)', 1)[0]
-          InetGet($adresse, @WorkingDir & "\Launcher_v." & $lastversion & ".exe")
+          InetGet($adresse, @ScriptDir & "\Launcher_v." & $lastversion & ".exe")
           If not @error Then
              IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
              Return 1   ; ok
