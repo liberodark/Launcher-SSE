@@ -10,6 +10,7 @@
 
 #include <GuiConstants.au3>
 #include <File.au3>
+#include <7zaExe.au3>
 
 Global $sXMLPath = "Game\config.xml"
 If not FileExists($sXMLPath) Then Exit Msgbox(48, "error", "config.xml absent")
