@@ -13,12 +13,12 @@
 #include <7zaExe.au3>
 
 Global $sXMLPath = "Game\config.xml"
-If Not FileExists($sXMLPath) Then Exit MsgBox(48, "error", "config.xml absent")
+If not FileExists($sXMLPath) Then Exit Msgbox(48, "error", "config.xml absent")
 
 Global $savedXML = "Game\config.xml.save"
-If Not FileExists($savedXML) Then FileCopy($sXMLPath, $savedXML) ; backup in launch
+If not FileExists($savedXML) Then FileCopy($sXMLPath, $savedXML) ; backup in launch
 Global $backupXML = "Game\config.xml.bak"
-If Not FileExists($backupXML) Then FileCopy($savedXML, $backupXML)
+If not FileExists($backupXML) Then FileCopy($savedXML, $backupXML)
 
 Global $PluginsDir = "Game\SmartSteamEmu\SmartSteamEmu\Plugins"
 Global $PluginsDirBak = "Game\SmartSteamEmu\SmartSteamEmu\PluginsBak"
@@ -43,77 +43,48 @@ StringReplace($sXMLContent, '<AppId>', '<AppId>')
 $nbAppid = @extended
 If $nbAppid = 2 Then $currentappid1 = StringRegExpReplace($sXMLContent, '(?s).*<AppId>([^<]+).*', "$1")
 
-; ====== update launcher ========
+; ====== update ========
 
-If _CheckVersion() = 1 Then MsgBox(0, "Update", "New version downloaded")
+If _CheckVersion() = 1 Then Msgbox(0,"Update", "New version downloaded")
 
 Func _CheckVersion()
-	; read dat in server
-	Local $remotedat = BinaryToString(InetRead("http://yurfile.altervista.org/repository/liberodark/version.dat"))
-	If @error Then Return 0 ; error
-	Local $lastversion = StringRegExp($remotedat, 'version=(\N+)', 1)[0] ; exemple 2.0.5
-	; read dat in local
-	$localdat = FileRead("version.dat")
-	Local $currentversion = StringRegExp($localdat, 'version=(\N+)', 1)[0] ; exemple 2.0.4
-	; compare versions
-	If StringReplace($currentversion, ".", "") < StringReplace($lastversion, ".", "") Then ; ex. si 204 < 205
-		If MsgBox(36, "Update", "Have new version" & @CRLF & "Download ?") = 6 Then
-			$adresse = StringRegExp($remotedat, 'adresse=(\N+)', 1)[0]
-			InetGet($adresse, @ScriptDir & "\Launcher_v." & $lastversion & ".exe")
-
-			; ====== update sse ========
-
-			$remoteFile = "http://yurfile.altervista.org/repository/liberodark/update.7z"
-			$localFile = @ScriptDir & "\Game\update.7z"
-
-			$fileSize = InetGetSize($remoteFile)
-			InetGet($remoteFile, $localFile, 1, 1)
-
-			While 1
-				Sleep(50)
-				If Not @InetGetActive Then ExitLoop
-
-				ToolTip("Progress : " & Round(@InetGetBytesRead * 100 / $fileSize) & "%")
-			WEnd
-
-			MsgBox(64, "Success", "Download")
-			FileDelete("Game\SSELauncher.exe")
-			DirRemove("Game\SmartSteamEmu", 1)
-			MsgBox(64, "Success", "Remove")
-
-			$7zaPath = @ScriptDir & "\Game\7za.exe"
-			$Archive = @ScriptDir & "\Game\update.7z"
-
-			$Res = _Extract7zaExe($7zaPath, $Archive, @ScriptDir & "\Game", 1)
-			FileDelete("Game\update.7z")
-			MsgBox(64, "Success", "Extract")
-			If Not @error Then
-				IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
-				Return 1 ; ok
-			EndIf
-		EndIf
-	EndIf
-	Return 0 ; error
-EndFunc   ;==>_CheckVersion
-
-
+   ; read dat in server
+   Local $remotedat = BinaryToString(InetRead("http://yurfile.altervista.org/repository/liberodark/version.dat"))
+   If @error Then Return 0  ; echec
+   Local $lastversion = StringRegExp($remotedat, 'version=(\N+)', 1)[0]  ; exemple 2.0.5
+   ; read dat in local
+   $localdat = FileRead("version.dat")
+   Local $currentversion = StringRegExp($localdat, 'version=(\N+)', 1)[0]   ; exemple 2.0.4
+   ; compare versions
+   If StringReplace($currentversion, ".", "") < StringReplace($lastversion, ".", "") Then  ; ex. si 204 < 205
+       If Msgbox(36, "Update", "Have new version" &@crlf& "Download ?") = 6 Then
+          $adresse = StringRegExp($remotedat, 'adresse=(\N+)', 1)[0]
+          InetGet($adresse, @ScriptDir & "\Launcher_v." & $lastversion & ".exe")
+          If not @error Then
+             IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
+             Return 1   ; ok
+         EndIf
+      EndIf
+  EndIf
+  Return 0  ; echec
+EndFunc
 
 ; ====== gui ========
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher (v2.0.8)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher (v2.0.7)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
-GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
-GUICtrlCreateLabel("", $iLeftWidth, $iT + 2, 2, $iH - $iT - $iB - 2, $SS_SUNKEN) ; separator
-GUICtrlCreateLabel("", 0, $iH - $iB, $iW, 2, $SS_SUNKEN) ; separator
+GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN)   ; separator
+GUICtrlCreateLabel("", $iLeftWidth, $iT + 2, 2, $iH - $iT - $iB - 2, $SS_SUNKEN)   ; separator
+GUICtrlCreateLabel("", 0, $iH - $iB, $iW, 2, $SS_SUNKEN)   ; separator
 $hFooter = GUICtrlCreateLabel("© 2016 liberodark", 10, $iH - 18, $iW - 20, 17)
 GUICtrlSetTip(-1, "GitHub", "Click to open...")
 GUICtrlSetCursor(-1, 0)
 
-$intro1 = GUICtrlCreateIcon("shell32.dll", -131, $iLeftWidth + 100, 100, 64, 64)
-$intro2 = GUICtrlCreateLabel("Welcome", $iLeftWidth + 95, 180, 100, 25)
+$intro1 = GUICtrlCreateIcon("shell32.dll", -131, $iLeftWidth+100, 100, 64, 64)
+$intro2 = GUICtrlCreateLabel("Welcome", $iLeftWidth+95, 180, 100, 25)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 
 Global $iLinks = 7
@@ -158,35 +129,35 @@ Local $btn_appid = GUICtrlCreateButton("Save", 235, 41, 50, 22)
 GUIStartGroup()
 GUICtrlCreateLabel("Steam Online", 18, 75, 80, 17)
 Local $hButton7 = GUICtrlCreateRadio("Online", 100, 70, 50, 25)
-GUICtrlSetState(-1, ($currentSteam <> "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
+GUICtrlSetState(-1, ($currentSteam<>"1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 Local $hButton8 = GUICtrlCreateRadio("Offline", 160, 70, 50, 25)
-GUICtrlSetState(-1, ($currentSteam = "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
+GUICtrlSetState(-1, ($currentSteam="1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 GUIStartGroup()
 GUICtrlCreateLabel("OnlinePlay", 18, 100, 80, 17)
 Local $hButton9 = GUICtrlCreateRadio("On", 100, 95, 50, 25)
-GUICtrlSetState(-1, ($currentOnlinePlay = "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
+GUICtrlSetState(-1, ($currentOnlinePlay="1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 Local $hButton10 = GUICtrlCreateRadio("Off", 160, 95, 50, 25)
-GUICtrlSetState(-1, ($currentOnlinePlay <> "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
+GUICtrlSetState(-1, ($currentOnlinePlay<>"1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 GUIStartGroup()
 GUICtrlCreateLabel("Overlay", 18, 125, 36, 17)
 Local $hButton11 = GUICtrlCreateRadio("On", 100, 120, 50, 25)
-GUICtrlSetState(-1, ($currentOverlay = "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
+GUICtrlSetState(-1, ($currentOverlay="1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 Local $hButton12 = GUICtrlCreateRadio("Off", 160, 120, 50, 25)
-GUICtrlSetState(-1, ($currentOverlay <> "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
+GUICtrlSetState(-1, ($currentOverlay<>"1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 GUIStartGroup()
 GUICtrlCreateLabel("VR", 18, 150, 36, 17)
 Local $hButton13 = GUICtrlCreateRadio("On", 100, 145, 50, 25)
-GUICtrlSetState(-1, ($currentVR = "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
+GUICtrlSetState(-1, ($currentVR="1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 Local $hButton14 = GUICtrlCreateRadio("Off", 160, 145, 50, 25)
-GUICtrlSetState(-1, ($currentVR <> "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
+GUICtrlSetState(-1, ($currentVR<>"1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 GUIStartGroup()
 GUICtrlCreateLabel("Plugins", 18, 185, 36, 17)
 Local $hButton15 = GUICtrlCreateCheckbox("Remove", 98, 180, 60, 25)
 Local $hButton15b = GUICtrlCreateCheckbox("Restore", 163, 180, 55, 25)
-If Not FileExists($PluginsDir) Then
-	GUICtrlSetState($hButton15, $GUI_CHECKED + $GUI_DISABLE)
+If not FileExists($PluginsDir) Then
+   GUICtrlSetState($hButton15, $GUI_CHECKED+$GUI_DISABLE)
 Else
-	GUICtrlSetState($hButton15b, $GUI_CHECKED + $GUI_DISABLE)
+   GUICtrlSetState($hButton15b, $GUI_CHECKED+$GUI_DISABLE)
 EndIf
 
 
@@ -204,7 +175,7 @@ Local $hButton3 = GUICtrlCreateButton("32bit", 56, 35, 75, 25)
 Local $hButton4 = GUICtrlCreateButton("64Bit", 150, 35, 75, 25)
 
 _AddControlsToPanel($aPanel[6])
-GUICtrlCreateEdit("", 10, 37, $iW - $iLeftWidth + 2 - 20 - 5, $iH - $iT - $iB - 40, $ES_READONLY, $WS_EX_STATICEDGE)
+GUICtrlCreateEdit("", 10, 37, $iW-$iLeftWidth+ 2-20-5, $iH-$iT-$iB-40, $ES_READONLY, $WS_EX_STATICEDGE)
 GUICtrlSetBkColor(-1, 0xffffff)
 Local $sTestTxt = ""
 $sTestTxt &= @TAB & "liberodark - Dev" & @CRLF
@@ -219,150 +190,150 @@ GUISetState(@SW_SHOW, $hMainGUI)
 
 
 While 1
-	Sleep(10)
-	$nMsg = GUIGetMsg(1)
-	Switch $nMsg[1]
-		Case $hMainGUI
-			Switch $nMsg[0]
-				Case $GUI_EVENT_CLOSE
-					If $modified = 0 Then Exit
-					If MsgBox(36, "Launcher SSE", "Keep these modifications ?") <> 6 Then
-						FileCopy($backupXML, $sXMLPath, $FC_OVERWRITE) ; restore
-						MsgBox(64, "Launcher SSE", "OK, maybe next time... see you later")
-					EndIf
-					Exit
-				Case $aLink[1], $aLink[2], $aLink[3], $aLink[4], $aLink[5], $aLink[6]
-					GUICtrlSetState($intro1, $GUI_HIDE)
-					GUICtrlSetState($intro2, $GUI_HIDE)
-					For $i = 1 To $aLink[0]
-						If $nMsg[0] = $aLink[$i] Then
-							GUISetState(@SW_SHOW, $aPanel[$i])
-						Else
-							GUISetState(@SW_HIDE, $aPanel[$i])
-						EndIf
-					Next
-				Case $hFooter
-					ShellExecute("https://github.com/liberodark/Launcher-SSE")
-			EndSwitch
-		Case $aPanel[1]
-			Switch $nMsg[0]
-				Case $hButton1
-					_UpdateXML($sXMLPath, "PersonaName", GUICtrlRead($hInput1))
-			EndSwitch
-		Case $aPanel[2]
-			Switch $nMsg[0]
-				Case $hButton2
-					_UpdateXML($sXMLPath, "Language", GUICtrlRead($Combo1))
-			EndSwitch
-		Case $aPanel[3]
-			Switch $nMsg[0]
-				Case $btn_appid
-					_UpdateXML($sXMLPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
-				Case $hButton7
-					_UpdateXML($sXMLPath, "Offline", "0") ; Steam Online
-				Case $hButton8
-					_UpdateXML($sXMLPath, "Offline", "1") ; Steam Offline
-				Case $hButton9
-					_UpdateXML($sXMLPath, "EnableOnlinePlay", "1") ; Online On
-				Case $hButton10
-					_UpdateXML($sXMLPath, "EnableOnlinePlay", "0") ; Online Off
-				Case $hButton11
-					_UpdateXML($sXMLPath, "EnableOverlay", "1") ; Overlay On
-				Case $hButton12
-					_UpdateXML($sXMLPath, "EnableOverlay", "0") ; Overlay Off
-				Case $hButton13
-					_UpdateXML($sXMLPath, "VR", "1") ; VR On
-				Case $hButton14
-					_UpdateXML($sXMLPath, "VR", "0") ; VR Off
-				Case $hButton15
-					If MsgBox(33, "Launcher SSE", "Remove plugins, overlay and online options ?") = 1 Then
-						DirMove($PluginsDir, $PluginsDirBak, 1) ; Remove plugins
-						GUICtrlSetState($hButton15, $GUI_CHECKED + $GUI_DISABLE)
-						GUICtrlSetState($hButton15b, $GUI_UNCHECKED + $GUI_ENABLE)
-						MsgBox(64, "Launcher SSE", "Plugins removed !")
-						$modified = 1
-					Else
-						GUICtrlSetState($hButton15, $GUI_UNCHECKED)
-					EndIf
-				Case $hButton15b
-					If MsgBox(33, "Launcher SSE", "Restore plugins, overlay and online options ?") = 1 Then
-						DirMove($PluginsDirBak, $PluginsDir, 1) ; Restore plugins
-						GUICtrlSetState($hButton15b, $GUI_CHECKED + $GUI_DISABLE)
-						GUICtrlSetState($hButton15, $GUI_UNCHECKED + $GUI_ENABLE)
-						MsgBox(64, "Launcher SSE", "Plugins restored !")
-						$modified = 1
-					Else
-						GUICtrlSetState($hButton15b, $GUI_UNCHECKED)
-					EndIf
-			EndSwitch
-		Case $aPanel[4]
-			Switch $nMsg[0]
-				Case $hButton5
-					If MsgBox(33, "Launcher SSE", "Backup current configuration and settings ?") = 1 Then
-						FileCopy($sXMLPath, $backupXML) ; backup
-						MsgBox(64, "Launcher SSE", "Current configuration saved")
-					EndIf
-				Case $hButton6
-					If MsgBox(33, "Launcher SSE", "Restore previous configuration and settings ?") = 1 Then
-						FileCopy($backupXML, $sXMLPath, $FC_OVERWRITE) ; restore
-						MsgBox(64, "Launcher SSE", "Previous configuration restored")
-					EndIf
-				Case $hButton16
-					If MsgBox(49, "Launcher SSE", "Reset configuration and remove name and all options ?") = 1 Then
-						FileCopy($savedXML, $sXMLPath, $FC_OVERWRITE) ; restore / Reset
-						MsgBox(64, "Launcher SSE", "Reset configuration done")
-					EndIf
-			EndSwitch
-		Case $aPanel[5]
-			Switch $nMsg[0]
-				Case $hButton3
-					Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput2), "Game\")
-					Exit
-				Case $hButton4
-					Switch $nbAppid
-						Case 1
-							Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput2), "Game\")
-						Case 2
-							Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput3), "Game\")
-					EndSwitch
-					Exit
-			EndSwitch
-	EndSwitch
+   Sleep(10)
+   $nMsg = GUIGetMsg(1)
+   Switch $nMsg[1]
+      Case $hMainGUI
+         Switch $nMsg[0]
+            Case $GUI_EVENT_CLOSE
+               If $modified = 0 Then Exit
+               If MsgBox(36, "Launcher SSE", "Keep these modifications ?") <> 6 Then
+                  FileCopy($backupXML, $sXMLPath, $FC_OVERWRITE) ; restore
+                  MsgBox(64, "Launcher SSE", "OK, maybe next time... see you later")
+               EndIf
+               Exit
+            Case $aLink[1], $aLink[2], $aLink[3], $aLink[4], $aLink[5], $aLink[6]
+               GUICtrlSetState($intro1, $GUI_HIDE)
+               GUICtrlSetState($intro2, $GUI_HIDE)
+               For $i = 1 To $aLink[0]
+                  If $nMsg[0] = $aLink[$i] Then
+                     GUISetState(@SW_SHOW, $aPanel[$i])
+                  Else
+                     GUISetState(@SW_HIDE, $aPanel[$i])
+                  EndIf
+               Next
+            Case $hFooter
+               ShellExecute("https://github.com/liberodark/Launcher-SSE")
+         EndSwitch
+      Case $aPanel[1]
+         Switch $nMsg[0]
+            Case $hButton1
+               _UpdateXML($sXMLPath, "PersonaName", GUICtrlRead($hInput1))
+         EndSwitch
+      Case $aPanel[2]
+         Switch $nMsg[0]
+            Case $hButton2
+               _UpdateXML($sXMLPath, "Language", GUICtrlRead($Combo1))
+         EndSwitch
+      Case $aPanel[3]
+         Switch $nMsg[0]
+            Case $btn_appid
+               _UpdateXML($sXMLPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
+            Case $hButton7
+               _UpdateXML($sXMLPath, "Offline", "0") ; Steam Online
+            Case $hButton8
+               _UpdateXML($sXMLPath, "Offline", "1") ; Steam Offline
+            Case $hButton9
+               _UpdateXML($sXMLPath, "EnableOnlinePlay", "1") ; Online On
+            Case $hButton10
+               _UpdateXML($sXMLPath, "EnableOnlinePlay", "0") ; Online Off
+            Case $hButton11
+               _UpdateXML($sXMLPath, "EnableOverlay", "1")  ; Overlay On
+            Case $hButton12
+               _UpdateXML($sXMLPath, "EnableOverlay", "0")  ; Overlay Off
+            Case $hButton13
+               _UpdateXML($sXMLPath, "VR", "1")  ; VR On
+            Case $hButton14
+               _UpdateXML($sXMLPath, "VR", "0")  ; VR Off
+            Case $hButton15
+               If MsgBox(33, "Launcher SSE", "Remove plugins, overlay and online options ?") = 1 Then
+                  DirMove($PluginsDir, $PluginsDirBak, 1) ; Remove plugins
+                  GUICtrlSetState($hButton15, $GUI_CHECKED+$GUI_DISABLE)
+                  GUICtrlSetState($hButton15b, $GUI_UNCHECKED+$GUI_ENABLE)
+                  MsgBox(64, "Launcher SSE", "Plugins removed !")
+                  $modified = 1
+               Else
+                  GUICtrlSetState($hButton15, $GUI_UNCHECKED)
+               EndIf
+            Case $hButton15b
+               If MsgBox(33, "Launcher SSE", "Restore plugins, overlay and online options ?") = 1 Then
+                  DirMove($PluginsDirBak, $PluginsDir, 1) ; Restore plugins
+                  GUICtrlSetState($hButton15b, $GUI_CHECKED+$GUI_DISABLE)
+                  GUICtrlSetState($hButton15, $GUI_UNCHECKED+$GUI_ENABLE)
+                  MsgBox(64, "Launcher SSE", "Plugins restored !")
+                  $modified = 1
+               Else
+                  GUICtrlSetState($hButton15b, $GUI_UNCHECKED)
+               EndIf
+         EndSwitch
+      Case $aPanel[4]
+         Switch $nMsg[0]
+            Case $hButton5
+               If MsgBox(33, "Launcher SSE", "Backup current configuration and settings ?") = 1 Then
+                  FileCopy($sXMLPath, $backupXML) ; backup
+                  MsgBox(64, "Launcher SSE", "Current configuration saved")
+               EndIf
+            Case $hButton6
+               If MsgBox(33, "Launcher SSE", "Restore previous configuration and settings ?") = 1 Then
+                  FileCopy($backupXML, $sXMLPath, $FC_OVERWRITE) ; restore
+                  MsgBox(64, "Launcher SSE", "Previous configuration restored")
+               EndIf
+            Case $hButton16
+               If MsgBox(49, "Launcher SSE", "Reset configuration and remove name and all options ?") = 1 Then
+                  FileCopy($savedXML, $sXMLPath, $FC_OVERWRITE) ; restore / Reset
+                  MsgBox(64, "Launcher SSE", "Reset configuration done")
+               EndIf
+         EndSwitch
+      Case $aPanel[5]
+         Switch $nMsg[0]
+            Case $hButton3
+               Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput2), "Game\")
+               Exit
+            Case $hButton4
+               Switch $nbAppId
+                  Case 1
+                     Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput2), "Game\")
+                  Case 2
+                     Run("Game\SSELauncher.exe -appid " & GUICtrlRead($hInput3), "Game\")
+               EndSwitch
+               Exit
+         EndSwitch
+   EndSwitch
 WEnd
 
 
 ;==================================================
 
 Func _UpdateXML($sFilePath, $option, $value1, $value2 = "")
-	Local $content = FileRead($sFilePath), $new, $text
-	$new = StringRegExpReplace($content, '(?<=<' & $option & '>)[^<]*', $value1, 1)
-	$text = 'Modification "' & $option & ' = ' & $value1 & '" saved'
-	If $value2 <> "" Then
-		$new = StringRegExpReplace($new, '(?s).*\K(?<=<' & $option & '>)[^<]*', $value2, 1)
-		$text &= @CRLF & 'Modification "' & $option & '2 = ' & $value2 & '" saved'
-	EndIf
-	Local $hFile = FileOpen($sFilePath, 2)
-	FileWrite($hFile, $new)
-	FileClose($hFile)
-	$modified = 1
-	MsgBox(64, "Launcher SSE", $text)
-EndFunc   ;==>_UpdateXML
+   Local $content = FileRead($sFilePath), $new, $text
+   $new = StringRegExpReplace($content, '(?<=<' & $option & '>)[^<]*', $value1, 1)
+   $text = 'Modification "' & $option & ' = ' & $value1 & '" saved'
+        If $value2 <> "" Then
+      $new = StringRegExpReplace($new, '(?s).*\K(?<=<' & $option & '>)[^<]*', $value2, 1)
+      $text &= @crlf & 'Modification "' & $option & '2 = ' & $value2 & '" saved'
+   EndIf
+   Local $hFile = FileOpen($sFilePath, 2)
+   FileWrite($hFile, $new)
+   FileClose($hFile)
+   $modified = 1
+   MsgBox(64, "Launcher SSE", $text)
+EndFunc
 
 Func _AddNewLink($sTxt, $iIcon = -44)
-	Local $hLink = GUICtrlCreateLabel($sTxt, 36, $iT + $iGap, $iLeftWidth - 46, 17)
-	GUICtrlSetCursor(-1, 0)
-	GUICtrlCreateIcon("shell32.dll", $iIcon, 10, $iT + $iGap, 16, 16)
-	$iGap += 22
-	Return $hLink
+   Local $hLink = GUICtrlCreateLabel($sTxt, 36, $iT+$iGap, $iLeftWidth-46, 17)
+   GUICtrlSetCursor(-1, 0)
+   GUICtrlCreateIcon("shell32.dll", $iIcon, 10, $iT+$iGap, 16, 16)
+   $iGap += 22
+   Return $hLink
 EndFunc   ;==>_AddNewLink
 
 Func _AddNewPanel($sTxt)
-	Local $gui = GUICreate("", $iW - $iLeftWidth + 2, $iH - $iT - $iB, $iLeftWidth + 2, $iT, $WS_CHILD, -1, $hMainGUI)
-	GUICtrlCreateLabel($sTxt, 10, 10, $iW - $iLeftWidth - 20, 17, $SS_CENTERIMAGE)
-	GUICtrlSetFont(-1, 9, 800, 4, "Arial", 5)
-	Return $gui
+   Local $gui = GUICreate("", $iW-$iLeftWidth+2, $iH-$iT-$iB, $iLeftWidth+2, $iT, $WS_CHILD, -1, $hMainGUI)
+   GUICtrlCreateLabel($sTxt, 10, 10, $iW-$iLeftWidth-20, 17, $SS_CENTERIMAGE)
+   GUICtrlSetFont(-1, 9, 800, 4, "Arial", 5)
+   Return $gui
 EndFunc   ;==>_AddNewPanel
 
 Func _AddControlsToPanel($hPanel)
-	GUISwitch($hPanel)
+   GUISwitch($hPanel)
 EndFunc   ;==>_AddControlsToPanel
