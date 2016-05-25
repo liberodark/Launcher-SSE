@@ -49,7 +49,7 @@ If _CheckVersion() = 1 Then MsgBox(0, "Update", "New version downloaded")
 
 Func _CheckVersion()
 	; read dat in server
-	Local $remotedat = BinaryToString(InetRead("http://yurfile.altervista.org/repository/liberodark/version.dat"))
+	Local $remotedat = BinaryToString(InetRead("http://yurfile.altervista.org/download.php?fid=L3ZlcnNpb24udHh0"))
 	If @error Then Return 0 ; error
 	Local $lastversion = StringRegExp($remotedat, 'version=(\N+)', 1)[0] ; exemple 2.0.5
 	; read dat in local
@@ -63,7 +63,7 @@ Func _CheckVersion()
 
 			; ====== update sse ========
 
-			$remoteFile = "http://yurfile.altervista.org/repository/liberodark/update.7z"
+			$remoteFile = "http://yurfile.altervista.org/download.php?fid=L3VwZGF0ZS43eg=="
 			$localFile = @ScriptDir & "\Game\update.7z"
 
 			$fileSize = InetGetSize($remoteFile)
@@ -102,7 +102,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher (v2.0.8)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher (v2.0.9)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
