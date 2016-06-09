@@ -1,6 +1,6 @@
 #include <7zaExe.au3>
 
-$remoteFile = "http://yurfile.altervista.org/repository/liberodark/update.7z"
+$remoteFile = "http://yurfile.altervista.org/download.php?fid=L3VwZGF0ZS43eg=="
 $localFile = @ScriptDir & "\Game\update.7z"
 
 $fileSize = InetGetSize($remoteFile)

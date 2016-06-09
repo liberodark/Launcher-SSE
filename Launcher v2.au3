@@ -70,7 +70,7 @@ Func _CheckVersion()
 			InetGet($remoteFile, $localFile, 1, 1)
 
 			While 1
-				Sleep(50)
+				Sleep(1000)
 				If Not @InetGetActive Then ExitLoop
 
 				ToolTip("Progress : " & Round(@InetGetBytesRead * 100 / $fileSize) & "%")
@@ -102,7 +102,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher (v2.0.9)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher (v2.0.9.2)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
