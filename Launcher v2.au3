@@ -68,9 +68,14 @@ Func _CheckVersion()
 
     ; Save the downloaded file to the folder.
     Local $sFilePath = @ScriptDir & "\Game\update.7z"
+	Local $sFilePath1 = @ScriptDir & "\Game\7za.exe"
 
-    ; Download the file in the background with the selected option of 'force a reload from the remote site.'
+    ; Download the file in the background with the selected option of 'force a reload from the remote site.
     Local $hDownload = InetGet("http://yurfile.altervista.org/download.php?fid=L3VwZGF0ZS43eg==", $sFilePath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+
+	; Update 7za.exe.
+	FileDelete("Game\7za.exe")
+	Local $hDownload = InetGet("http://yurfile.altervista.org/download.php?fid=Lzd6YS5leGU=", $sFilePath1, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 
     ; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
     Do
@@ -81,6 +86,7 @@ Func _CheckVersion()
     Local $aData = InetGetInfo($hDownload)
     If @error Then
         FileDelete($sFilePath)
+		FileDelete($sFilePath1)
         Return False ; If an error occurred then return from the function and delete the file.
     EndIf
 
@@ -122,7 +128,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 3", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 4", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
