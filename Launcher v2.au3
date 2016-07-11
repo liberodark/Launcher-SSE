@@ -66,7 +66,7 @@ Func _CheckVersion()
 
 			; ====== update sse ========
 
-    ; Save the downloaded file to the temporary folder.
+    ; Save the downloaded file to the folder.
     Local $sFilePath = @ScriptDir & "\Game\update.7z"
 
     ; Download the file in the background with the selected option of 'force a reload from the remote site.'
@@ -108,6 +108,7 @@ MsgBox(64,"Success", "Extract")
             "extended: " & $aData[$INET_DOWNLOADEXTENDED] & @CRLF)
 			If Not @error Then
 				IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
+				Exit
 				Return 1 ; ok
 			EndIf
 		EndIf
