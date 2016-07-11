@@ -11,6 +11,9 @@
 #include <GuiConstants.au3>
 #include <File.au3>
 #include <7zaExe.au3>
+#include <InetConstants.au3>
+#include <MsgBoxConstants.au3>
+#include <WinAPIFiles.au3>
 
 Global $sXMLPath = "Game\config.xml"
 If Not FileExists($sXMLPath) Then Exit MsgBox(48, "error", "config.xml absent")
@@ -63,30 +66,46 @@ Func _CheckVersion()
 
 			; ====== update sse ========
 
-			$remoteFile = "http://yurfile.altervista.org/download.php?fid=L3VwZGF0ZS43eg=="
-			$localFile = @ScriptDir & "\Game\update.7z"
+    ; Save the downloaded file to the temporary folder.
+    Local $sFilePath = @ScriptDir & "\Game\update.7z"
 
-			$fileSize = InetGetSize($remoteFile)
-			InetGet($remoteFile, $localFile, 1, 1)
+    ; Download the file in the background with the selected option of 'force a reload from the remote site.'
+    Local $hDownload = InetGet("http://yurfile.altervista.org/download.php?fid=L3VwZGF0ZS43eg==", $sFilePath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 
-			While 1
-				Sleep(1000)
-				If Not @InetGetActive Then ExitLoop
+    ; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
+    Do
+        Sleep(250)
+    Until InetGetInfo($hDownload, $INET_DOWNLOADCOMPLETE)
 
-				ToolTip("Progress : " & Round(@InetGetBytesRead * 100 / $fileSize) & "%")
-			WEnd
+    ; Retrieve details about the download file.
+    Local $aData = InetGetInfo($hDownload)
+    If @error Then
+        FileDelete($sFilePath)
+        Return False ; If an error occurred then return from the function and delete the file.
+    EndIf
 
-			MsgBox(64, "Success", "Download")
-			FileDelete("Game\SSELauncher.exe")
-			DirRemove("Game\SmartSteamEmu", 1)
-			MsgBox(64, "Success", "Remove")
+MsgBox(64,"Success", "Download")
+FileDelete("Game\SSELauncher.exe")
+DirRemove("Game\SmartSteamEmu", 1)
+MsgBox(64,"Success", "Remove")
 
-			$7zaPath = @ScriptDir & "\Game\7za.exe"
-			$Archive = @ScriptDir & "\Game\update.7z"
+$7zaPath = @ScriptDir & "\Game\7za.exe"
+$Archive = @ScriptDir & "\Game\update.7z"
 
-			$Res = _Extract7zaExe($7zaPath, $Archive, @ScriptDir & "\Game", 1)
-			FileDelete("Game\update.7z")
-			MsgBox(64, "Success", "Extract")
+$Res = _Extract7zaExe($7zaPath, $Archive, @ScriptDir&"\Game", 1)
+FileDelete("Game\update.7z")
+MsgBox(64,"Success", "Extract")
+
+    ; Close the handle returned by InetGet.
+    InetClose($hDownload)
+
+    ; Display details about the downloaded file.
+    MsgBox($MB_SYSTEMMODAL, "", "Bytes read: " & $aData[$INET_DOWNLOADREAD] & @CRLF & _
+            "Size: " & $aData[$INET_DOWNLOADSIZE] & @CRLF & _
+            "Complete: " & $aData[$INET_DOWNLOADCOMPLETE] & @CRLF & _
+            "successful: " & $aData[$INET_DOWNLOADSUCCESS] & @CRLF & _
+            "error: " & $aData[$INET_DOWNLOADERROR] & @CRLF & _
+            "extended: " & $aData[$INET_DOWNLOADEXTENDED] & @CRLF)
 			If Not @error Then
 				IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
 				Return 1 ; ok
@@ -102,7 +121,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher (v2.0.9.2)", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 3", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
