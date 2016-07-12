@@ -48,7 +48,10 @@ If $nbAppid = 2 Then $currentappid1 = StringRegExpReplace($sXMLContent, '(?s).*<
 
 ; ====== update launcher ========
 
-If _CheckVersion() = 1 Then MsgBox(0, "Update", "New version downloaded")
+If _CheckVersion() = "1" Then
+   MsgBox(0, "Update", "New version downloaded")
+   Exit
+EndIf
 
 Func _CheckVersion()
 	; read dat in server
@@ -114,7 +117,6 @@ MsgBox(64,"Success", "Extract")
             "extended: " & $aData[$INET_DOWNLOADEXTENDED] & @CRLF)
 			If Not @error Then
 				IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
-				Exit
 				Return 1 ; ok
 			EndIf
 		EndIf
@@ -128,7 +130,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 4", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 5", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
