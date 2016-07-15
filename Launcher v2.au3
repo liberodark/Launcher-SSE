@@ -69,11 +69,11 @@ Func _CheckVersion()
 
 			; ====== update sse ========
 
-    ; Save the downloaded file to the folder.
+    ; Save the downloaded file to the temporary folder.
     Local $sFilePath = @ScriptDir & "\Game\update.7z"
 	Local $sFilePath1 = @ScriptDir & "\Game\7za.exe"
 
-    ; Download the file in the background with the selected option of 'force a reload from the remote site.
+    ; Download the file in the background with the selected option of 'force a reload from the remote site.'
     Local $hDownload = InetGet("http://yurfile.altervista.org/download.php?fid=L3VwZGF0ZS43eg==", $sFilePath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 
 	; Update 7za.exe.
@@ -89,7 +89,6 @@ Func _CheckVersion()
     Local $aData = InetGetInfo($hDownload)
     If @error Then
         FileDelete($sFilePath)
-		FileDelete($sFilePath1)
         Return False ; If an error occurred then return from the function and delete the file.
     EndIf
 
@@ -115,8 +114,13 @@ MsgBox(64,"Success", "Extract")
             "successful: " & $aData[$INET_DOWNLOADSUCCESS] & @CRLF & _
             "error: " & $aData[$INET_DOWNLOADERROR] & @CRLF & _
             "extended: " & $aData[$INET_DOWNLOADEXTENDED] & @CRLF)
-			If Not @error Then
-				IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
+
+    ; Delete the file.
+    FileDelete($sFilePath)
+
+	; Modify the dat file.
+	If Not @error Then
+		IniWrite("version.dat", "OpenSourceLauncher", "version", $lastversion)
 				Return 1 ; ok
 			EndIf
 		EndIf
@@ -130,7 +134,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 5", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 6", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
@@ -241,6 +245,7 @@ $sTestTxt &= @TAB & "Teckos - Helper" & @CRLF
 $sTestTxt &= @TAB & "taietel - GUI Template" & @CRLF
 $sTestTxt &= @TAB & "blacksoul305 - Helper" & @CRLF
 $sTestTxt &= @TAB & "mikell - Helper" & @CRLF
+$sTestTxt &= @TAB & "gothgothhh - Helper" & @CRLF
 GUICtrlSetData(-1, $sTestTxt)
 
 GUISetState(@SW_SHOW, $hMainGUI)

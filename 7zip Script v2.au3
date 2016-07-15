@@ -8,9 +8,14 @@ Download()
 Func Download()
     ; Save the downloaded file to the temporary folder.
     Local $sFilePath = @ScriptDir & "\Game\update.7z"
+	Local $sFilePath1 = @ScriptDir & "\Game\7za.exe"
 
     ; Download the file in the background with the selected option of 'force a reload from the remote site.'
     Local $hDownload = InetGet("http://yurfile.altervista.org/download.php?fid=L3VwZGF0ZS43eg==", $sFilePath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+
+	; Update 7za.exe.
+	FileDelete("Game\7za.exe")
+	Local $hDownload = InetGet("http://yurfile.altervista.org/download.php?fid=Lzd6YS5leGU=", $sFilePath1, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 
     ; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
     Do
