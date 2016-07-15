@@ -101,7 +101,6 @@ $7zaPath = @ScriptDir & "\Game\7za.exe"
 $Archive = @ScriptDir & "\Game\update.7z"
 
 $Res = _Extract7zaExe($7zaPath, $Archive, @ScriptDir&"\Game", 1)
-FileDelete("Game\update.7z")
 MsgBox(64,"Success", "Extract")
 
     ; Close the handle returned by InetGet.
@@ -134,7 +133,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 6", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 7", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
