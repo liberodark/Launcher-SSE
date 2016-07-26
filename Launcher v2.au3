@@ -46,6 +46,19 @@ StringReplace($sXMLContent, '<AppId>', '<AppId>')
 $nbAppid = @extended
 If $nbAppid = 2 Then $currentappid1 = StringRegExpReplace($sXMLContent, '(?s).*<AppId>([^<]+).*', "$1")
 
+; ==================
+; Redistribuable Detection
+
+Local $sDLL1 = "C:\Windows\System32\msvcr100.dll"
+Local $sDLL2 = "C:\Windows\SysWOW64\msvcr100.dll"
+
+If (not FileExists($sDLL1)) AND (not FileExists($sDLL2)) Then ; Returns 0 if the file does not exist
+; If not Microsoft Visual C++ 2010
+MsgBox(64,"Error Microsoft Visual C++ 2010", "Download & Install Microsoft Visual C++ 2010 x86")
+ShellExecute ("https://www.microsoft.com/en-US/download/details.aspx?id=5555")
+Exit
+EndIf
+
 ; ====== update launcher ========
 
 If _CheckVersion() = "1" Then
@@ -128,7 +141,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 8", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 9", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("shell32.dll", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator

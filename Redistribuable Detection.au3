@@ -2,14 +2,12 @@ Example()
 
 Func Example()
 
-Local Const $sDLL = "C:\Windows\System32\msvcr100.dll"  ; Check msvcr100.dll
-; "C:\Windows\SysWOW64\msvcr100.dll à ajouter"
+Local $sDLL1 = "C:\Windows\System32\msvcr100.dll"
+Local $sDLL2 = "C:\Windows\SysWOW64\msvcr100.dll"
 
-If FileExists($sDLL) = 0 Then ; Returns 0 if the file does not exist
-
-RunWait(@ScriptDir & "\Game\vcredist_x86.exe /passive /norestart", @SW_HIDE) ; Install Microsoft Visual C++ 2010 if 0
+If (not FileExists($sDLL1)) AND (not FileExists($sDLL2)) Then ; Returns 0 if the file does not exist
 ; Si pas présent ouverture du lien
-; ShellExecute http://yurfile.altervista.org/download.php?fid=L3ZjcmVkaXN0X3g4Ni5leGU=
+ShellExecute http://yurfile.altervista.org/download.php?fid=L3ZjcmVkaXN0X3g4Ni5leGU=
 EndIf
 
 ; Détection de .NET Framework 4.0
