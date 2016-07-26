@@ -49,17 +49,19 @@ If $nbAppid = 2 Then $currentappid1 = StringRegExpReplace($sXMLContent, '(?s).*<
 ; ==================
 ; Redistribuable Detection
 
+; Check msvcr100.dll
 Local $sDLL1 = "C:\Windows\System32\msvcr100.dll"
 Local $sDLL2 = "C:\Windows\SysWOW64\msvcr100.dll"
 
 If (not FileExists($sDLL1)) AND (not FileExists($sDLL2)) Then ; Returns 0 if the file does not exist
-; If not Microsoft Visual C++ 2010
+; If not detect Microsoft Visual C++ 2010
 MsgBox(64,"Error Microsoft Visual C++ 2010", "Download & Install Microsoft Visual C++ 2010 x86")
 ShellExecute ("https://www.microsoft.com/en-US/download/details.aspx?id=5555")
 Exit
 EndIf
 
-; ====== update launcher ========
+; ==================
+; update launcher
 
 If _CheckVersion() = "1" Then
    MsgBox(0, "Update", "New version downloaded")
