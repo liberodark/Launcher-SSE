@@ -143,10 +143,10 @@ EndFunc   ;==>_CheckVersion
 ; ====== gui ========
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
-GUISetIcon("Steam.ico", -58, $hMainGUI)
+GUISetIcon("steam.ico", -58, $hMainGUI)
 GUICtrlCreateLabel("Open Source Launcher 2.1.0 Build 1", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
-GUICtrlCreateIcon("Steam.ico", -131, 8, 8, 32, 32)
+GUICtrlCreateIcon("steam.ico", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
 GUICtrlCreateLabel("", $iLeftWidth, $iT + 2, 2, $iH - $iT - $iB - 2, $SS_SUNKEN) ; separator
 GUICtrlCreateLabel("", 0, $iH - $iB, $iW, 2, $SS_SUNKEN) ; separator
@@ -154,7 +154,7 @@ $hFooter = GUICtrlCreateLabel("© 2016 liberodark", 10, $iH - 18, $iW - 20, 17)
 GUICtrlSetTip(-1, "GitHub", "Click to open...")
 GUICtrlSetCursor(-1, 0)
 
-$intro1 = GUICtrlCreateIcon("Steam.ico", -131, $iLeftWidth + 100, 100, 64, 64)
+$intro1 = GUICtrlCreateIcon("open.ico", -131, $iLeftWidth + 100, 100, 64, 64)
 $intro2 = GUICtrlCreateLabel("Welcome", $iLeftWidth + 95, 180, 100, 25)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 
