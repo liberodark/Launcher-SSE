@@ -149,6 +149,9 @@ GUICtrlCreateLabel("Open Source Launcher 2.1.0 Build 1", 48, 8, $iW - 56, 32, $S
 =======
 GUISetIcon("shell32.dll", -58, $hMainGUI)
 GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 10", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+<<<<<<< HEAD
+>>>>>>> parent of 123572d... 2.1.0.0 Build 0
+=======
 >>>>>>> parent of 123572d... 2.1.0.0 Build 0
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("steam.ico", -131, 8, 8, 32, 32)
