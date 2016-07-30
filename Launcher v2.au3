@@ -1,3 +1,9 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Icon=steam.ico
+#AutoIt3Wrapper_Res_Icon_Add=open.ico
+#AutoIt3Wrapper_Res_Icon_Add=steam.ico
+#AutoIt3Wrapper_Add_Constants=n
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #cs ----------------------------------------------------------------------------
 
 	AutoIt Version: 3.3.14.2
@@ -143,26 +149,18 @@ EndFunc   ;==>_CheckVersion
 ; ====== gui ========
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
-<<<<<<< HEAD
 GUISetIcon("steam.ico", -58, $hMainGUI)
 GUICtrlCreateLabel("Open Source Launcher 2.1.0 Build 1", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
-=======
-GUISetIcon("shell32.dll", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 10", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
-<<<<<<< HEAD
->>>>>>> parent of 123572d... 2.1.0.0 Build 0
-=======
->>>>>>> parent of 123572d... 2.1.0.0 Build 0
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
-GUICtrlCreateIcon("steam.ico", -131, 8, 8, 32, 32)
+GUISetIcon("steam.ico", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
 GUICtrlCreateLabel("", $iLeftWidth, $iT + 2, 2, $iH - $iT - $iB - 2, $SS_SUNKEN) ; separator
 GUICtrlCreateLabel("", 0, $iH - $iB, $iW, 2, $SS_SUNKEN) ; separator
-$hFooter = GUICtrlCreateLabel("© 2016 liberodark", 10, $iH - 18, $iW - 20, 17)
+$hFooter = GUICtrlCreateLabel("Â© 2016 liberodark", 10, $iH - 18, $iW - 20, 17)
 GUICtrlSetTip(-1, "GitHub", "Click to open...")
 GUICtrlSetCursor(-1, 0)
 
-$intro1 = GUICtrlCreateIcon("open.ico", -131, $iLeftWidth + 100, 100, 64, 64)
+$intro1 = GUISetIcon("open.ico", -131, $iLeftWidth + 100, 100, 64, 64)
 $intro2 = GUICtrlCreateLabel("Welcome", $iLeftWidth + 95, 180, 100, 25)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 
@@ -315,7 +313,7 @@ While 1
 				Case $btn_appid
 					_UpdateXML($sXMLPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
 				Case $hButton17
-					_UpdateXML($sXMLPath, "Steam ID", GUICtrlRead($Combo2)) ; Steam ID Generation
+					_UpdateXML($sXMLPath, "SteamIdGeneration", GUICtrlRead($Combo2)) ; Steam ID Generation
 				Case $hButton7
 					_UpdateXML($sXMLPath, "Offline", "0") ; Steam Online
 				Case $hButton8
