@@ -143,8 +143,13 @@ EndFunc   ;==>_CheckVersion
 ; ====== gui ========
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
+<<<<<<< HEAD
 GUISetIcon("steam.ico", -58, $hMainGUI)
 GUICtrlCreateLabel("Open Source Launcher 2.1.0 Build 1", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+=======
+GUISetIcon("shell32.dll", -58, $hMainGUI)
+GUICtrlCreateLabel("Open Source Launcher 2.0.9 Build 10", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+>>>>>>> parent of 123572d... 2.1.0.0 Build 0
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon("steam.ico", -131, 8, 8, 32, 32)
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator
@@ -307,7 +312,7 @@ While 1
 				Case $btn_appid
 					_UpdateXML($sXMLPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
 				Case $hButton17
-					_UpdateXML($sXMLPath, "SteamIdGeneration", GUICtrlRead($Combo2)) ; Steam ID Generation
+					_UpdateXML($sXMLPath, "Steam ID", GUICtrlRead($Combo2)) ; Steam ID Generation
 				Case $hButton7
 					_UpdateXML($sXMLPath, "Offline", "0") ; Steam Online
 				Case $hButton8
