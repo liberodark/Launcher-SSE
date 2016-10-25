@@ -40,11 +40,7 @@ $sXMLContent = FileRead($sXMLPath)
 
 $currentname = IniRead($sXMLPath, "Settings", "PlayerName", "")
 $currentlang = IniRead($sXMLPath, "Settings", "Language", "")
-$currentVR = StringRegExpReplace($sXMLContent, '(?s).*?<VR>([^<]+).*', "$1")
-$currentSteam = StringRegExpReplace($sXMLContent, '(?s).*?<Offline>([^<]+).*', "$1")
-$currentOnlinePlay = StringRegExpReplace($sXMLContent, '(?s).*?<EnableOnlinePlay>([^<]+).*', "$1")
-$currentOverlay = StringRegExpReplace($sXMLContent, '(?s).*?<EnableOverlay>([^<]+).*', "$1")
-$currentSteamId = StringRegExpReplace($sXMLContent, '(?s).*?<SteamIdGeneration>([^<]+).*', "$1")
+$currentapi = IniRead($sXMLPath, "Settings", "API", "")
 $currentappid = IniRead($sXMLPath, "Settings", "AppID", "")
 
 $currentappid1 = ""
@@ -148,7 +144,7 @@ EndFunc   ;==>_CheckVersion
 
 ; ====== gui ========
 
-$hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
+$hMainGUI = GUICreate("Launcher ALI", $iW, $iH, -1, 150)
 GUISetIcon("steam.ico", -58, $hMainGUI)
 GUICtrlCreateLabel("Open Source Launcher 2.1.0 Build 2", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
@@ -204,34 +200,9 @@ Local $hInput3 = GUICtrlCreateInput($currentappid1, 155, 42, 70, 20)
 If $nbAppid = 1 Then GUICtrlSetState(-1, $GUI_DISABLE)
 Local $btn_appid = GUICtrlCreateButton("Save", 235, 41, 50, 22)
 GUIStartGroup()
-GUICtrlCreateLabel("Steam ID", 18, 75, 80, 17)
-Global $Combo2 = GUICtrlCreateCombo("", 80, 70, 121, 21)
-GUICtrlSetData($Combo2, "Static|Random|ip|PersonaName|GenerateRandom", $currentSteamId)
+GUICtrlCreateLabel("Steam API", 18, 75, 80, 17)
+Local $hInput2 = GUICtrlCreateInput($currentapi, 80, 70, 121, 21)
 Local $hButton17 = GUICtrlCreateButton("Save", 235, 70, 50, 22)
-GUIStartGroup()
-GUICtrlCreateLabel("Steam Online", 18, 100, 80, 17)
-Local $hButton7 = GUICtrlCreateRadio("Online", 100, 95, 50, 25)
-GUICtrlSetState(-1, ($currentSteam <> "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
-Local $hButton8 = GUICtrlCreateRadio("Offline", 160, 95, 50, 25)
-GUICtrlSetState(-1, ($currentSteam = "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
-GUIStartGroup()
-GUICtrlCreateLabel("OnlinePlay", 18, 125, 80, 17)
-Local $hButton9 = GUICtrlCreateRadio("On", 100, 120, 50, 25)
-GUICtrlSetState(-1, ($currentOnlinePlay = "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
-Local $hButton10 = GUICtrlCreateRadio("Off", 160, 120, 50, 25)
-GUICtrlSetState(-1, ($currentOnlinePlay <> "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
-GUIStartGroup()
-GUICtrlCreateLabel("Overlay", 18, 150, 36, 17)
-Local $hButton11 = GUICtrlCreateRadio("On", 100, 145, 50, 25)
-GUICtrlSetState(-1, ($currentOverlay = "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
-Local $hButton12 = GUICtrlCreateRadio("Off", 160, 145, 50, 25)
-GUICtrlSetState(-1, ($currentOverlay <> "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
-GUIStartGroup()
-GUICtrlCreateLabel("VR", 18, 175, 36, 17)
-Local $hButton13 = GUICtrlCreateRadio("On", 100, 170, 50, 25)
-GUICtrlSetState(-1, ($currentVR = "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
-Local $hButton14 = GUICtrlCreateRadio("Off", 160, 170, 50, 25)
-GUICtrlSetState(-1, ($currentVR <> "1") ? $GUI_CHECKED : $GUI_UNCHECKED)
 GUIStartGroup()
 GUICtrlCreateLabel("Plugins", 18, 215, 36, 17)
 Local $hButton15 = GUICtrlCreateCheckbox("Remove", 98, 210, 60, 25)
@@ -313,24 +284,6 @@ While 1
 				Case $btn_appid
 					_UpdateXML($sXMLPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
 				Case $hButton17
-					_UpdateXML($sXMLPath, "SteamIdGeneration", GUICtrlRead($Combo2)) ; Steam ID Generation
-				Case $hButton7
-					_UpdateXML($sXMLPath, "Offline", "0") ; Steam Online
-				Case $hButton8
-					_UpdateXML($sXMLPath, "Offline", "1") ; Steam Offline
-				Case $hButton9
-					_UpdateXML($sXMLPath, "EnableOnlinePlay", "1") ; Online On
-				Case $hButton10
-					_UpdateXML($sXMLPath, "EnableOnlinePlay", "0") ; Online Off
-				Case $hButton11
-					_UpdateXML($sXMLPath, "EnableOverlay", "1") ; Overlay On
-				Case $hButton12
-					_UpdateXML($sXMLPath, "EnableOverlay", "0") ; Overlay Off
-				Case $hButton13
-					_UpdateXML($sXMLPath, "VR", "1") ; VR On
-				Case $hButton14
-					_UpdateXML($sXMLPath, "VR", "0") ; VR Off
-				Case $hButton15
 					If MsgBox(33, "Launcher SSE", "Remove plugins, overlay and online options ?") = 1 Then
 						DirMove($PluginsDir, $PluginsDirBak, 1) ; Remove plugins
 						GUICtrlSetState($hButton15, $GUI_CHECKED + $GUI_DISABLE)
