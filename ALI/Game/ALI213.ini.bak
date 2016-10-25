@@ -1,9 +1,6 @@
 [Settings]
-#############################################
-#	OPTIONS
-#############################################
-PlayerName = liberodark
-Language = french
-SaveType = 1
-AppID = 383120
+PlayerName = liberodark
+Language = French
+SaveType = 1
+AppID = 383120
 API = 2.89.45.4
