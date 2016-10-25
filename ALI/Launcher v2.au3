@@ -365,24 +365,7 @@ While 1
 					EndIf
 				Case $hButton16
 					If MsgBox(49, "Launcher SSE", "Reset configuration and remove name and all options ?") = 1 Then
-						; Delete file INI.
-					FileDelete("Game\ALI213.ini")
-
-					; Crée une structure de section INI sous forme de chaîne.
-					Local $sSection = "PlayerName = liberodark" & @CRLF & "Language = French" & @CRLF & "SaveType = 1" & @CRLF & "AppID = 383120" & @CRLF & "API = 2.89.45.4"
-
-					; Écrit la chaîne dans le sections intitulées 'General', 'Version' et 'Other'.
-					IniWriteSection("Game\ALI213.ini", "Settings", $sSection)
-
-					; Lit les noms des sections INI. Ce qui renvoie un tableau à 1 dimension.
-					Local $aArray = IniReadSectionNames("Game\ALI213.ini")
-
-					; Check errors.
-					If Not @error Then
-					; Énumére le tableau où figurent les noms des sections.
-					For $i = 1 To $aArray[0]
-					Next
-					EndIf
+						FileCopy($savedXML, $sXMLPath, $FC_OVERWRITE) ; restore / Reset
 						MsgBox(64, "Launcher SSE", "Reset configuration done")
 					EndIf
 			EndSwitch
