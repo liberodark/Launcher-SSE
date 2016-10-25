@@ -38,7 +38,7 @@ Global $iW = 500, $iH = 400, $iT = 52, $iB = 27, $iLeftWidth = 150, $iGap = 10, 
 ; read xml
 $sXMLContent = FileRead($sXMLPath)
 
-$currentname = IniRead("Game\ALI213.ini", "PlayerName = ", " = ", "liberodark")
+$currentname = StringRegExpReplace($sXMLContent, '(?s).*?PlayerName =([^<]+).*', "$1")
 $currentlang = StringRegExpReplace($sXMLContent, '(?s).*?Language =([^<]+).*', "$1")
 $currentVR = StringRegExpReplace($sXMLContent, '(?s).*?<VR>([^<]+).*', "$1")
 $currentSteam = StringRegExpReplace($sXMLContent, '(?s).*?<Offline>([^<]+).*', "$1")
@@ -301,7 +301,7 @@ While 1
 		Case $aPanel[1]
 			Switch $nMsg[0]
 				Case $hButton1
-					_UpdateXML($sXMLPath, "PlayerName", GUICtrlRead($hInput1))
+					_UpdateXML($sXMLPath, "PersonaName", GUICtrlRead($hInput1))
 			EndSwitch
 		Case $aPanel[2]
 			Switch $nMsg[0]
