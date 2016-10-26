@@ -1,0 +1,15 @@
+package fr.bestdevelop.launcher.sse.ui.contents;
+
+import javax.swing.JPanel;
+
+public class LauncherContent extends JPanel{
+	
+	public LauncherContent() {
+		this.setLayout(null);
+		setupPanelComponent();
+	}
+	
+	private void setupPanelComponent() {
+		
+	}
+}

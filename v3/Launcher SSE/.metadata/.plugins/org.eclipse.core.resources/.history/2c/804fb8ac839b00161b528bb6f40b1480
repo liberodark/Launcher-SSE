@@ -1,0 +1,7 @@
+package fr.bestdevelop.launcher.sse;
+
+import fr.bestdevelop.ml.logger.LoggerLib;
+
+public class Launcher {
+	public static final LoggerLib logger = new LoggerLib(Constants.LAUNCHER_NAME);
+}

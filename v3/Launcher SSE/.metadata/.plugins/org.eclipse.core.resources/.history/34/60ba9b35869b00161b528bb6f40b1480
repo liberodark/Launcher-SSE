@@ -1,0 +1,32 @@
+package fr.bestdevelop.launcher.sse.ui.contents;
+
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.JPanel;
+
+import fr.bestdevelop.launcher.sse.utils.Utils;
+import fr.bestdevelop.ml.swinger.buttons.textured.STexturedButton;
+
+public class LauncherContent extends JPanel {
+	
+	private STexturedButton pseudoButton;
+	
+	public LauncherContent() {
+		this.setLayout(null);
+		setupPanelComponent();
+	}
+	
+	private void setupPanelComponent() {
+		pseudoButton = new STexturedButton(Utils.getResource("buttons/pseudoButton.png"));
+		pseudoButton.setBounds(10, 5, 95, 28);
+		this.add(pseudoButton);
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		Image background = Utils.getResource("contents/LauncherContent.jpg");
+		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
+	}
+}

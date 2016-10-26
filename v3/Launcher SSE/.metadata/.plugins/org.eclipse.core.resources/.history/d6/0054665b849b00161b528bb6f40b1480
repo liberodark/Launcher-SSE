@@ -1,0 +1,7 @@
+package fr.bestdevelop.launcher.sse.ui.frame;
+
+public class LauncherFrame {
+	public LauncherFrame() {
+		
+	}
+}

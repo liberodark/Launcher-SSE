@@ -1,0 +1,35 @@
+package fr.bestdevelop.launcher.sse.ui.frame;
+
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+import fr.bestdevelop.launcher.sse.Constants;
+import fr.bestdevelop.launcher.sse.ui.contents.LauncherContent;
+import fr.bestdevelop.launcher.sse.ui.contents.PseudoContent;
+
+public class LauncherFrame extends JFrame {
+	
+	public LauncherContent launcherContent = new LauncherContent();
+	public PseudoContent pseudoContent = new PseudoContent();
+	
+	public LauncherFrame() {
+		this.setTitle(Constants.LAUNCHER_NAME + " " + Constants.LAUNCHER_VERSION);
+		this.setSize(516, 458);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setUndecorated(false);
+		this.setResizable(false);
+		//this.setIconImage(Utils.getResource("favicon.png"));
+		this.setContentPane(launcherContent);
+		
+		this.setVisible(true);
+	}
+	
+	public LauncherContent getLauncherContent() {
+		return launcherContent;
+	}
+	
+	public PseudoContent getPseudoContent() {
+		return pseudoContent;
+	}
+}
