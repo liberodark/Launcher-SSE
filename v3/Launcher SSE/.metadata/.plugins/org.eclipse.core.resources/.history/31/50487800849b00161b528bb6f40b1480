@@ -1,9 +1,0 @@
-package fr.bestdevelop.launcher.sse;
-
-import fr.bestdevelop.launcher.sse.ui.frame.LauncherFrame;
-
-public class Main {
-	private static Launcher launcher = new Launcher();
-	
-	private static LauncherFrame frame;
-}

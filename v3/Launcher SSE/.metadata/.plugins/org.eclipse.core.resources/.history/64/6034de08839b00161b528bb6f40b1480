@@ -1,7 +1,0 @@
-package fr.bestdevelop.launcher.sse;
-
-public class Constants {
-	public static final String LAUNCHER_DIR = "Rust";
-	public static final String LAUNCHER_NAME = "Launcher SSE";
-	public static final String LAUNCHER_VERSION = "2.1.0 Build 2";
-}
