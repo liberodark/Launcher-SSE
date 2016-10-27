@@ -32,7 +32,7 @@ public class LauncherContent extends JPanel {
 		this.add(pseudoButton);
 		pseudoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				Main.getInstance().setContentPane(Main.getInstance().getPseudoContent());
+				Main.getInstance().setContentPane(Main.getInstance().pseudoContent = new PseudoContent());
 				Main.getInstance().revalidate();
 				return;
 			}
@@ -43,7 +43,7 @@ public class LauncherContent extends JPanel {
 		this.add(languageButton);
 		languageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				Main.getInstance().setContentPane(Main.getInstance().getLanguageContent());
+				Main.getInstance().setContentPane(Main.getInstance().languageContent = new LanguageContent());
 				Main.getInstance().revalidate();
 				return;
 			}
@@ -54,7 +54,7 @@ public class LauncherContent extends JPanel {
 		this.add(optionsButton);
 		optionsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				Main.getInstance().setContentPane(Main.getInstance().getOptionsContent());
+				Main.getInstance().setContentPane(Main.getInstance().optionsContent = new OptionsContent());
 				Main.getInstance().revalidate();
 				return;
 			}
@@ -65,7 +65,7 @@ public class LauncherContent extends JPanel {
 		this.add(saveandrestoreButton);
 		saveandrestoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				Main.getInstance().setContentPane(Main.getInstance().getSaveAndRestoreContent());
+				Main.getInstance().setContentPane(Main.getInstance().saveAndRestoreContent = new SaveAndRestoreContent());
 				Main.getInstance().revalidate();
 				return;
 			}
@@ -76,7 +76,7 @@ public class LauncherContent extends JPanel {
 		this.add(launchgameButton);
 		launchgameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				Main.getInstance().setContentPane(Main.getInstance().getLaunchGameContent());
+				Main.getInstance().setContentPane(Main.getInstance().launchGameContent = new LaunchGameContent());
 				Main.getInstance().revalidate();
 				return;
 			}

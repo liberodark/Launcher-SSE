@@ -13,12 +13,12 @@ import fr.bestdevelop.launcher.sse.ui.contents.SaveAndRestoreContent;
 
 public class LauncherFrame extends JFrame {
 	
-	public LauncherContent launcherContent = new LauncherContent();
-	public PseudoContent pseudoContent = new PseudoContent();
-	public LanguageContent languageContent = new LanguageContent();
-	public OptionsContent optionsContent = new OptionsContent();
-	public SaveAndRestoreContent saveAndRestoreContent = new SaveAndRestoreContent();
-	public LaunchGameContent launchGameContent = new LaunchGameContent();
+	public LauncherContent launcherContent;
+	public PseudoContent pseudoContent;
+	public LanguageContent languageContent;
+	public OptionsContent optionsContent;
+	public SaveAndRestoreContent saveAndRestoreContent;
+	public LaunchGameContent launchGameContent;
 	
 	public LauncherFrame() {
 		this.setTitle(Constants.LAUNCHER_NAME + " " + Constants.LAUNCHER_VERSION);
@@ -28,7 +28,7 @@ public class LauncherFrame extends JFrame {
 		this.setUndecorated(false);
 		this.setResizable(false);
 		//this.setIconImage(Utils.getResource("favicon.png"));
-		this.setContentPane(languageContent);
+		this.setContentPane(launcherContent = new LauncherContent());
 		
 		this.setVisible(true);
 	}
