@@ -1,0 +1,76 @@
+package fr.bestdevelop.bootstrap.sse;
+
+import java.io.File;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import javax.swing.JOptionPane;
+
+import fr.bestdevelop.ml.logger.LoggerLib;
+import fr.bestdevelop.ml.update.UpdateLib;
+import fr.bestdevelop.bootstrap.sse.utils.OperatingSystem;
+import fr.bestdevelop.bootstrap.sse.utils.Utils;
+
+public class Bootstrap {
+	public static final LoggerLib logger = new LoggerLib(Constants.BOOTSTRAP_NAME);
+	
+	private static Thread updateThread;
+	
+	public void start(String[] args) {
+		logger.info(Constants.BOOTSTRAP_NAME + " started on " + OperatingSystem.getCurrentPlatform().getName() + "...");
+		logger.info("Current time is " + DateFormat.getDateTimeInstance(2, 2, Locale.US).format(new Date()));
+		if (!OperatingSystem.getCurrentPlatform().isSupported()) {
+			logger.warning("This operating system is unknown or unsupported, we cannot guarantee that the game will launch successfully.");
+		}
+		
+		logger.info("System.getProperty('os.name') == '" + System.getProperty("os.name") + "'");
+		logger.info("System.getProperty('os.version') == '" + System.getProperty("os.version") + "'");
+		logger.info("System.getProperty('os.arch') == '" + System.getProperty("os.arch") + "'");
+		logger.info("System.getProperty('java.version') == '" + System.getProperty("java.version") + "'");
+		logger.info("System.getProperty('java.vendor') == '" + System.getProperty("java.vendor") + "'");
+		logger.info("System.getProperty('sun.arch.data.model') == '" + System.getProperty("sun.arch.data.model") + "'");
+		
+		if(Utils.getJavaProcess()) {
+			logger.warning("You use Java 32-bits when you have a 64 bits processor.");
+		}
+	}
+	
+	public static void startUpdate() {
+		Thread thread = new Thread() {
+			public void run() {
+				logger.sleep(2000L);
+				
+				int i = 0;
+				do {
+					i++;
+					try {
+						update();
+					}
+					catch (Exception ex) {
+						Main.getInstance().getBootstrapPanel().getProgressText().setText("Connecting to the server (" + i + "/2)...");
+						if(i == 2) {
+							JOptionPane.showMessageDialog(Main.getInstance(), "Impossible de se connecter au serveur ! \n Cela peut etre lié à un problème de connection Internet ou à un \n problème au niveau du réseau de @Bestdevelop.", Constants.BOOTSTRAP_NAME, JOptionPane.ERROR_MESSAGE);
+							System.exit(0);
+							return;
+						}
+						logger.sleep(5000l);
+					}
+					
+				} while(!(UpdateLib.getNumberOfFileToDownload() == 0) || i < 2); // while(!(UpdateLib.getNumberOfFileToDownload() == 0) || !(i == 5))
+				
+				logger.info("Starting " + "Launcher.jar");
+				try {
+					launch(new File("/Launcher.jar"));
+				} 
+				catch (Exception ex) {
+					JOptionPane.showMessageDialog(Main.getInstance(), ex, Constants.BOOTSTRAP_NAME, 0);
+				}
+				
+				logger.sleep(2000L);
+				System.exit(0);
+			}
+		};
+		thread.start();
+	}
+}

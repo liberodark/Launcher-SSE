@@ -19,5 +19,10 @@
 			<type>2</type>
 			<location>C:/Users/Bestdevelop/Documents/Bestdevelop/Dev/ML-LibrariesLib_jars</location>
 		</link>
+		<link>
+			<name>.link2</name>
+			<type>2</type>
+			<location>C:/Users/Bestdevelop/Documents/GitHub/Launcher-SSE/v3/ML-LibrariesLib</location>
+		</link>
 	</linkedResources>
 </projectDescription>

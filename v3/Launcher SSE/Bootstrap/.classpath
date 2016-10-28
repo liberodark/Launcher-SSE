@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="C:/Users/Bestdevelop/Documents/GitHub/Launcher-SSE/v3/ML-LibrariesLib/ml-loggerlib-0.0.00.04-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Bestdevelop/Documents/GitHub/Launcher-SSE/v3/ML-LibrariesLib/ml-swingerlib-0.0.01.16-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Bestdevelop/Documents/Bestdevelop/Dev/ML-LibrariesLib_jars/test/ml-updatelib-0.0.00.02-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
