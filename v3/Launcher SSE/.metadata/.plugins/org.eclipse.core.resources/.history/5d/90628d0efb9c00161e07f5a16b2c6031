@@ -1,0 +1,61 @@
+package fr.bestdevelop.test;
+
+import java.io.File;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+public class Main2 {
+	
+	public static void main(String[] args) {
+		//On crée un nouvel Element etudiant et on l'ajoute
+		//en tant qu'Element de racine
+		Element etudiant = new Element("etudiant");
+		racine.addContent(etudiant);
+
+		//On crée un nouvel Attribut classe et on l'ajoute à etudiant
+		//grâce à la méthode setAttribute
+		Attribute classe = new Attribute("classe","P2");
+		etudiant.setAttribute(classe);
+
+		//On crée un nouvel Element nom, on lui assigne du texte
+		//et on l'ajoute en tant qu'Element de etudiant
+		Element nom = new Element("nom");
+		nom.setText("CynO");
+		etudiant.addContent(nom);
+
+		//Les deux méthodes qui suivent seront définies plus loin dans l'article
+	    affiche();
+	    enregistre("file.xml");
+	}
+	
+	private static Node getCompany(Document doc, String id, String name, String age, String role) {
+        Element company = doc.createElement("Company");
+        company.setAttribute("id", id);
+        company.appendChild(getCompanyElements(doc, company, "Name", name));
+        company.appendChild(getCompanyElements(doc, company, "Type", age));
+        company.appendChild(getCompanyElements(doc, company, "Employees", role));
+        return company;
+    }
+	
+	private static Node getCompanyElements(Document doc, Element element, String name, String value) {
+        Element node = doc.createElement(name);
+        node.appendChild(doc.createTextNode(value));
+        return node;
+    }
+	
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;fr.bestdevelop.test.Man2&apos; to &apos;Main2&apos;&#x0D;&#x0A;- Original project: &apos;Test&apos;&#x0D;&#x0A;- Original element: &apos;fr.bestdevelop.test.Man2&apos;&#x0D;&#x0A;- Renamed element: &apos;fr.bestdevelop.test.Main2&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Man2&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;fr.bestdevelop.test{Man2.java[Man2" matchStrategy="1" name="Main2" qualified="false" references="true" similarDeclarations="false" stamp="1477570201860" textual="false" version="1.0"/>
+</session>
