@@ -1,8 +1,8 @@
 #include <MsgBoxConstants.au3>
 
-Example()
+_Reset()
 
-Func Example()
+Func _Reset()
 	; Supprime le fichier INI.
     FileDelete("Game\ALI213.ini")
 
@@ -22,4 +22,4 @@ Func Example()
             MsgBox($MB_SYSTEMMODAL, "", "Reset: " & $aArray[$i])
         Next
     EndIf
-EndFunc   ;==> Example
+EndFunc   ;==> _Reset

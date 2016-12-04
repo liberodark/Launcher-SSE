@@ -1,9 +1,0 @@
-package fr.bestdevelop.bootstrap.sse;
-
-public class Main {
-	
-	public static void main(String[] args) {
-		
-	}
-	
-}

@@ -21,11 +21,11 @@
 #include <MsgBoxConstants.au3>
 #include <WinAPIFiles.au3>
 
-Global $sXMLPath = "Game\ALI213.ini"
-If Not FileExists($sXMLPath) Then Exit MsgBox(48, "error", "ALI213.ini absent")
+Global $sINIPath = "Game\ALI213.ini"
+If Not FileExists($sINIPath) Then Exit MsgBox(48, "error", "ALI213.ini absent")
 
 Global $savedXML = "Game\ALI213.ini.save"
-If Not FileExists($savedXML) Then FileCopy($sXMLPath, $savedXML) ; backup in launch
+If Not FileExists($savedXML) Then FileCopy($sINIPath, $savedXML) ; backup in launch
 Global $backupXML = "Game\ALI213.ini.bak"
 If Not FileExists($backupXML) Then FileCopy($savedXML, $backupXML)
 
@@ -36,12 +36,12 @@ Global $iW = 500, $iH = 400, $iT = 52, $iB = 27, $iLeftWidth = 150, $iGap = 10, 
 
 ; ==================
 ; read ini
-$sXMLContent = FileRead($sXMLPath)
+$sXMLContent = FileRead($sINIPath)
 
-$currentname = IniRead($sXMLPath, "Settings", "PlayerName", "")
-$currentlang = IniRead($sXMLPath, "Settings", "Language", "")
-$currentapi = IniRead($sXMLPath, "Settings", "API", "")
-$currentappid = IniRead($sXMLPath, "Settings", "AppID", "")
+$currentname = IniRead($sINIPath, "Settings", "PlayerName", "")
+$currentlang = IniRead($sINIPath, "Settings", "Language", "")
+$currentapi = IniRead($sINIPath, "Settings", "API", "")
+$currentappid = IniRead($sINIPath, "Settings", "AppID", "")
 
 $currentappid1 = ""
 ; test 2 appid <AppId>
@@ -252,7 +252,7 @@ While 1
 				Case $GUI_EVENT_CLOSE
 					If $modified = 0 Then Exit
 					If MsgBox(36, "Launcher SSE", "Keep these modifications ?") <> 6 Then
-						FileCopy($backupXML, $sXMLPath, $FC_OVERWRITE) ; restore
+						FileCopy($backupXML, $sINIPath, $FC_OVERWRITE) ; restore
 						MsgBox(64, "Launcher SSE", "OK, maybe next time... see you later")
 					EndIf
 					Exit
@@ -272,17 +272,17 @@ While 1
 		Case $aPanel[1]
 			Switch $nMsg[0]
 				Case $hButton1
-					_UpdateXML($sXMLPath, "PlayerName", GUICtrlRead($hInput1))
+					IniRenameSection($sINIPath, "Settings", GUICtrlRead($hInput1))
 			EndSwitch
 		Case $aPanel[2]
 			Switch $nMsg[0]
 				Case $hButton2
-					_UpdateXML($sXMLPath, "Language", GUICtrlRead($Combo1))
+					IniRenameSection($sINIPath, "Language", GUICtrlRead($Combo1))
 			EndSwitch
 		Case $aPanel[3]
 			Switch $nMsg[0]
 				Case $btn_appid
-					_UpdateXML($sXMLPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
+					IniWrite($sINIPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
 				Case $hButton17
 					If MsgBox(33, "Launcher SSE", "Remove plugins, overlay and online options ?") = 1 Then
 						DirMove($PluginsDir, $PluginsDirBak, 1) ; Remove plugins
@@ -308,17 +308,17 @@ While 1
 			Switch $nMsg[0]
 				Case $hButton5
 					If MsgBox(33, "Launcher SSE", "Backup current configuration and settings ?") = 1 Then
-						FileCopy($sXMLPath, $backupXML) ; backup
+						FileCopy($sINIPath, $backupXML) ; backup
 						MsgBox(64, "Launcher SSE", "Current configuration saved")
 					EndIf
 				Case $hButton6
 					If MsgBox(33, "Launcher SSE", "Restore previous configuration and settings ?") = 1 Then
-						FileCopy($backupXML, $sXMLPath, $FC_OVERWRITE) ; restore
+						FileCopy($backupXML, $sINIPath, $FC_OVERWRITE) ; restore
 						MsgBox(64, "Launcher SSE", "Previous configuration restored")
 					EndIf
 				Case $hButton16
 					If MsgBox(49, "Launcher SSE", "Reset configuration and remove name and all options ?") = 1 Then
-						FileCopy($savedXML, $sXMLPath, $FC_OVERWRITE) ; restore / Reset
+						FileCopy($savedXML, $sINIPath, $FC_OVERWRITE) ; restore / Reset
 						MsgBox(64, "Launcher SSE", "Reset configuration done")
 					EndIf
 			EndSwitch
@@ -342,20 +342,27 @@ WEnd
 
 ;==================================================
 
-Func _UpdateXML($sFilePath, $option, $value1, $value2 = "")
-	Local $content = FileRead($sFilePath), $new, $text
-	$new = StringRegExpReplace($content, '(?<=<' & $option & '>)[^<]*', $value1, 1)
-	$text = 'Modification "' & $option & ' = ' & $value1 & '" saved'
-	If $value2 <> "" Then
-		$new = StringRegExpReplace($new, '(?s).*\K(?<=<' & $option & '>)[^<]*', $value2, 1)
-		$text &= @CRLF & 'Modification "' & $option & '2 = ' & $value2 & '" saved'
-	EndIf
-	Local $hFile = FileOpen($sFilePath, 2)
-	FileWrite($hFile, $new)
-	FileClose($hFile)
-	$modified = 1
-	MsgBox(64, "Launcher SSE", $text)
-EndFunc   ;==>_UpdateXML
+Func _ResetINI($hReset)
+	; Deletes the INI file.
+    FileDelete("Game\ALI213.ini")
+
+    ; Creates an INI section structure as a string.
+    Local $sSection = "PlayerName = liberodark" & @CRLF & "Language = French" & @CRLF & "SaveType = 1" & @CRLF & "AppID = 383120" & @CRLF & "API = 2.89.45.4"
+
+    ; Write the string in the sections labeled 'General', 'Version' and 'Other'.
+    IniWriteSection("Game\ALI213.ini", "Settings", $sSection)
+
+    ; Reads the names of INI sections. This returns a 1-dimensional array.
+    Local $aArray = IniReadSectionNames("Game\ALI213.ini")
+
+    ; Checks if an error has occurred.
+    If Not @error Then
+        ; Enumerates the table containing the names of the sections.
+        For $i = 1 To $aArray[0]
+            MsgBox($MB_SYSTEMMODAL, "", "Reset: " & $aArray[$i])
+        Next
+    EndIf
+EndFunc   ;==> _ResetINI
 
 Func _AddNewLink($sTxt, $iIcon = -44)
 	Local $hLink = GUICtrlCreateLabel($sTxt, 36, $iT + $iGap, $iLeftWidth - 46, 17)
