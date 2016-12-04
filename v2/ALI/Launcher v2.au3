@@ -272,7 +272,7 @@ While 1
 		Case $aPanel[1]
 			Switch $nMsg[0]
 				Case $hButton1
-					IniRenameSection($sINIPath, "Settings", GUICtrlRead($hInput1))
+					IniRenameSection($sINIPath, $currentname, GUICtrlRead($hInput1))
 			EndSwitch
 		Case $aPanel[2]
 			Switch $nMsg[0]
@@ -341,28 +341,6 @@ WEnd
 
 
 ;==================================================
-
-Func _ResetINI($hReset)
-	; Deletes the INI file.
-    FileDelete("Game\ALI213.ini")
-
-    ; Creates an INI section structure as a string.
-    Local $sSection = "PlayerName = liberodark" & @CRLF & "Language = French" & @CRLF & "SaveType = 1" & @CRLF & "AppID = 383120" & @CRLF & "API = 2.89.45.4"
-
-    ; Write the string in the sections labeled 'General', 'Version' and 'Other'.
-    IniWriteSection("Game\ALI213.ini", "Settings", $sSection)
-
-    ; Reads the names of INI sections. This returns a 1-dimensional array.
-    Local $aArray = IniReadSectionNames("Game\ALI213.ini")
-
-    ; Checks if an error has occurred.
-    If Not @error Then
-        ; Enumerates the table containing the names of the sections.
-        For $i = 1 To $aArray[0]
-            MsgBox($MB_SYSTEMMODAL, "", "Reset: " & $aArray[$i])
-        Next
-    EndIf
-EndFunc   ;==> _ResetINI
 
 Func _AddNewLink($sTxt, $iIcon = -44)
 	Local $hLink = GUICtrlCreateLabel($sTxt, 36, $iT + $iGap, $iLeftWidth - 46, 17)
