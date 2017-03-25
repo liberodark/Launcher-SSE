@@ -95,7 +95,7 @@ Func _CheckVersion()
     Local $sFilePath = @ScriptDir & "\Game\update.7z"
 
     ; Download the file in the background with the selected option of 'force a reload from the remote site.'
-    Local $hDownload = InetGet("http://yurfile.altervista.org/download.php?fid=L3VwZGF0ZS43eg==", $sFilePath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+    Local $hDownload = InetGet("http://yurfile.altervista.org/download.php?fid=L1VwZGF0ZS43eg==", $sFilePath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 
     ; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
     Do
@@ -150,7 +150,7 @@ EndFunc   ;==>_CheckVersion
 
 $hMainGUI = GUICreate("Launcher SSE", $iW, $iH, -1, 150)
 GUISetIcon("steam.ico", -58, $hMainGUI)
-GUICtrlCreateLabel("Open Source Launcher 2.1.0 Build 2", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
+GUICtrlCreateLabel("Open Source Launcher 2.1.0 Build 3", 48, 8, $iW - 56, 32, $SS_CENTERIMAGE)
 GUICtrlSetFont(-1, 14, 800, 0, "Arial", 5)
 GUICtrlCreateIcon(@ScriptFullPath, -1, 8, 8, 32, 32) ; steam.ico
 GUICtrlCreateLabel("", 0, $iT, $iW, 2, $SS_SUNKEN) ; separator

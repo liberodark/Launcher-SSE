@@ -203,15 +203,6 @@ GUIStartGroup()
 GUICtrlCreateLabel("Steam API", 18, 75, 80, 17)
 Local $hInput2 = GUICtrlCreateInput($currentapi, 80, 70, 121, 21)
 Local $hButton17 = GUICtrlCreateButton("Save", 235, 70, 50, 22)
-GUIStartGroup()
-GUICtrlCreateLabel("Plugins", 18, 215, 36, 17)
-Local $hButton15 = GUICtrlCreateCheckbox("Remove", 98, 210, 60, 25)
-Local $hButton15b = GUICtrlCreateCheckbox("Restore", 163, 210, 55, 25)
-If Not FileExists($PluginsDir) Then
-	GUICtrlSetState($hButton15, $GUI_CHECKED + $GUI_DISABLE)
-Else
-	GUICtrlSetState($hButton15b, $GUI_CHECKED + $GUI_DISABLE)
-EndIf
 
 
 _AddControlsToPanel($aPanel[4])
@@ -272,37 +263,17 @@ While 1
 		Case $aPanel[1]
 			Switch $nMsg[0]
 				Case $hButton1
-					IniRenameSection($sINIPath, $currentname, GUICtrlRead($hInput1))
+					IniWrite($sINIPath, "Settings", "PlayerName", GUICtrlRead($hInput1))
 			EndSwitch
 		Case $aPanel[2]
 			Switch $nMsg[0]
 				Case $hButton2
-					IniRenameSection($sINIPath, "Language", GUICtrlRead($Combo1))
+					IniWrite($sINIPath, "Settings", "Language", GUICtrlRead($Combo1))
 			EndSwitch
 		Case $aPanel[3]
 			Switch $nMsg[0]
 				Case $btn_appid
-					IniWrite($sINIPath, "AppId", GUICtrlRead($hInput2), GUICtrlRead($hInput3)) ; AppId
-				Case $hButton17
-					If MsgBox(33, "Launcher SSE", "Remove plugins, overlay and online options ?") = 1 Then
-						DirMove($PluginsDir, $PluginsDirBak, 1) ; Remove plugins
-						GUICtrlSetState($hButton15, $GUI_CHECKED + $GUI_DISABLE)
-						GUICtrlSetState($hButton15b, $GUI_UNCHECKED + $GUI_ENABLE)
-						MsgBox(64, "Launcher SSE", "Plugins removed !")
-						$modified = 1
-					Else
-						GUICtrlSetState($hButton15, $GUI_UNCHECKED)
-					EndIf
-				Case $hButton15b
-					If MsgBox(33, "Launcher SSE", "Restore plugins, overlay and online options ?") = 1 Then
-						DirMove($PluginsDirBak, $PluginsDir, 1) ; Restore plugins
-						GUICtrlSetState($hButton15b, $GUI_CHECKED + $GUI_DISABLE)
-						GUICtrlSetState($hButton15, $GUI_UNCHECKED + $GUI_ENABLE)
-						MsgBox(64, "Launcher SSE", "Plugins restored !")
-						$modified = 1
-					Else
-						GUICtrlSetState($hButton15b, $GUI_UNCHECKED)
-					EndIf
+					IniWrite($sINIPath, "Settings", "AppId", GUICtrlRead($hInput2)) ; AppId
 			EndSwitch
 		Case $aPanel[4]
 			Switch $nMsg[0]
